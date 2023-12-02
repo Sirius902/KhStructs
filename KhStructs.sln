@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KhStructs", "KhStructs\KhStructs.csproj", "{59A955EF-B71D-4CDA-91F4-E25CA962130C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KhStructs.InteropSourceGenerators", "KhStructs.InteropSourceGenerators\KhStructs.InteropSourceGenerators.csproj", "{D539B27E-2D82-4A49-A821-EAFC2583A003}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{59A955EF-B71D-4CDA-91F4-E25CA962130C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59A955EF-B71D-4CDA-91F4-E25CA962130C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59A955EF-B71D-4CDA-91F4-E25CA962130C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D539B27E-2D82-4A49-A821-EAFC2583A003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D539B27E-2D82-4A49-A821-EAFC2583A003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D539B27E-2D82-4A49-A821-EAFC2583A003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D539B27E-2D82-4A49-A821-EAFC2583A003}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

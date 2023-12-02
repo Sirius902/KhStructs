@@ -1,6 +1,8 @@
 # KhStructs
 API to assist in reverse engineering and providing raw access to native internals and structures of Kingdom Hearts PC port games.
 
+Contains code from [FFXIVClientStructs](https://github.com/aers/FFXIVClientStructs) which is licensed under the MIT license.
+
 ## Note
 * Most work is currently focused on exposing generic PC port and Kingdom Hearts II functionality.
 
