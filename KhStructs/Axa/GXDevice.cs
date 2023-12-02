@@ -73,4 +73,7 @@ public unsafe partial struct GXDevice {
 
     [StaticAddress("75 99 48 8D 0D ?? ?? ?? ??", 5, isPointer: false)]
     public static partial GXDevice* Instance();
+
+    [MemberFunction("E8 ?? ?? ?? ?? 89 AF ?? ?? ?? ?? F3 0F 10 47 ??")]
+    public static partial void InitSwapchain(GXDevice* device);
 }
