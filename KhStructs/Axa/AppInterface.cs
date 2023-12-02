@@ -4,7 +4,7 @@ namespace KhStructs.Axa;
 // Axa.AppInterface
 
 // size=0x1498
-// ctor E8 ?? ?? ?? ?? 48 8D 05 ?? ?? ?? ?? 48 8D 4C 24 ?? 48 89 84 24 ?? ?? ?? ??
+// ctor is not safely siggable
 [StructLayout(LayoutKind.Explicit, Size = 0x1498)]
 public unsafe partial struct AppInterface {
     [FieldOffset(0x00)] public void* vtbl;
@@ -40,6 +40,9 @@ public unsafe partial struct AppInterface {
 
     [StaticAddress("48 89 35 ?? ?? ?? ?? 48 8B C6", 3, isPointer: true)]
     public static partial AppInterface* Instance();
+
+    [MemberFunction("48 89 51 08 48 89 4A 08")]
+    public static partial void LinkAppAndSettingMenu(AppInterface* app, void* settingMenu);
 
     [MemberFunction("40 56 41 56 48 83 EC 48 45 33 D2")]
     public static partial void UpdateKeyboardInput(AppInterface* app, nint a2, nint a3);
