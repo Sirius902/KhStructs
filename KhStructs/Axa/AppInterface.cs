@@ -44,9 +44,6 @@ public unsafe partial struct AppInterface {
     [MemberFunction("48 89 51 08 48 89 4A 08")]
     public static partial void LinkAppAndSettingMenu(AppInterface* app, void* settingMenu);
 
-    [MemberFunction("40 56 41 56 48 83 EC 48 45 33 D2")]
-    public static partial void UpdateKeyboardInput(AppInterface* app, nint a2, nint a3);
-
     [VirtualFunction(4)]
     public partial int Tick();
 }
