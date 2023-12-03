@@ -3,16 +3,16 @@ namespace KhStructs.Game.Kh2;
 // ALLOCATOR
 
 // size=0x8
-[StructLayout(LayoutKind.Sequential)]
+[StructLayout(LayoutKind.Explicit, Size = 8)]
 public unsafe partial struct Allocator {
-    public void* vtbl;
+    [FieldOffset(0x00)] public void* vtbl;
 
     [VirtualFunction(0)]
-    public static partial void Dtor(char flag);
+    public partial void Dtor(char flag);
 
     [VirtualFunction(1)]
-    public static partial void* Alloc(nuint size);
+    public partial void* Alloc(nuint size);
 
     [VirtualFunction(2)]
-    public static partial void Free(void* ptr);
+    public partial void Free(void* ptr);
 }

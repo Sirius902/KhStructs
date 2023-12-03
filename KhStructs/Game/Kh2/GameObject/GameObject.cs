@@ -1,3 +1,4 @@
+using KhStructs.Game.Kh2.GameObject.VTable;
 using KhStructs.Game.Kh2.Math;
 
 namespace KhStructs.Game.Kh2.GameObject;
@@ -46,7 +47,7 @@ public unsafe partial struct GameObject {
     [FieldOffset(0x5B8)] public int RefCount;
 
     // TODO: This is definitely only on things that have YS::BTLOBJ.
-    [FieldOffset(0x5C0)] public Status BattleStatus;
+    [FieldOffset(0x5C0)] public Status* BattleStatus;
 
     [FieldOffset(0x5D8)] public void* PVoid5D8;
 
@@ -72,7 +73,8 @@ public unsafe partial struct GameObject {
 
     [FieldOffset(0x920)] public void* MdlxFile;
 
-    [FieldOffset(0x938)] public fixed nint PVoidArray938[16];
+    [FixedSizeArray<nint>(8)]
+    [FieldOffset(0x938)] public fixed byte PVoidArray938[16 * 8];
     [FieldOffset(0x9B8)] public Flags9B8 Flags9B8;
 
     [FieldOffset(0x9F0)] public void* PVoid9F0;
@@ -97,11 +99,13 @@ public unsafe partial struct GameObject {
 
     [FieldOffset(0xE08)] public nint QWordE08;
 
+    public GameObjectVTable* VTable() => (GameObjectVTable*)Hash.Lookup(this.VTableHash);
+
     [StaticAddress("81 8F ?? ?? ?? ?? ?? ?? ?? ?? 48 89 3D ?? ?? ?? ??", 13, isPointer: true)]
     public static partial GameObject* InitialPlayer();
 
     /// <summary>
-    /// Returns the address of the next valid game object after <see cref="gameObject"/> or null if there are no more.
+    /// Returns the address of the next valid game object after <paramref name="gameObject"/> or null if there are no more.
     /// </summary>
     /// <param name="gameObject">The game object to find the next of or null to get the first <see cref="GameObject"/>.</param>
     /// <returns>The first or next <see cref="GameObject"/>.</returns>
