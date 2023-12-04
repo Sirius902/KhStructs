@@ -9,11 +9,11 @@ namespace KhStructs.Game.Kh2.GameMode;
 public unsafe partial struct GameMode {
     public void* vtbl;
     public TaskManager* TaskManager;
-    public short DWord10;
+    public int DWord10;
     public int NextHash;
-    public short DWord18;
-    public short DWord1C;
-    public short DWord20;
+    public int DWord18;
+    public int DWord1C;
+    public int DWord20;
     public Status Status;
     public void* PVoid28;
 
