@@ -4,8 +4,8 @@ namespace KhStructs.Game.Kh2.GameObject;
 public enum Flags9B8 {
     Flag0 = 1 << 0,
     Flag1 = 1 << 1,
-    Flag2 = 1 << 2,
-    Dead = 1 << 3,
+    Dead = 1 << 2,
+    Flag3 = 1 << 3,
     Flag4 = 1 << 4,
     Actionable = 1 << 5,
     Flag6 = 1 << 6,
