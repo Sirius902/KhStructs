@@ -10,4 +10,7 @@ public unsafe partial struct GameObjectVTable {
 
     [VirtualFunction(22)]
     public partial void Kill(GameObject* gameObject);
+
+    [VirtualFunction(29)]
+    public partial int AdjustStat(GameObject* gameObject, int delta, int statIndex, bool a4);
 }
