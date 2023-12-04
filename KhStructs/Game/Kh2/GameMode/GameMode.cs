@@ -19,7 +19,7 @@ public unsafe partial struct GameMode {
 
     public static GameMode* ListTail() => ListHead() + 1;
 
-    [StaticAddress("C6 05 ?? ?? ?? ?? ?? 33 D2 48 8B CF", 2, isPointer: false)]
+    [StaticAddress("C6 05 ?? ?? ?? ?? ?? 33 D2 48 8B CF", 2, isPointer: false, 5)]
     public static partial bool* SoftResetFlag();
 
     [StaticAddress("BA ?? ?? ?? ?? 89 05 ?? ?? ?? ?? 48 89 05 ?? ?? ?? ?? 8D 48 01", 7, isPointer: false)]

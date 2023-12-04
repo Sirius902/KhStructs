@@ -93,7 +93,7 @@ internal sealed class StaticAddressGenerator : IIncrementalGenerator {
     }
 
     internal sealed record StaticAddressInfo(MethodInfo MethodInfo, SignatureInfo SignatureInfo, int Offset,
-        bool IsPointer) {
+        bool IsPointer, int InstructionSize) {
         public static Validation<DiagnosticInfo, StaticAddressInfo> GetFromRoslyn(
             MethodDeclarationSyntax methodSyntax, IMethodSymbol methodSymbol) {
             Validation<DiagnosticInfo, MethodInfo> validMethodInfo =
@@ -109,14 +109,16 @@ internal sealed class StaticAddressGenerator : IIncrementalGenerator {
                 staticAddressAttribute.GetValidAttributeArgument<int>("Offset", 1, AttributeName, methodSymbol);
             Validation<DiagnosticInfo, bool> validIsPointer =
                 staticAddressAttribute.GetValidAttributeArgument<bool>("IsPointer", 2, AttributeName, methodSymbol);
+            Validation<DiagnosticInfo, int> validInstructionSize =
+                staticAddressAttribute.GetValidAttributeArgument<int>("InstructionSize", 3, AttributeName, methodSymbol);
 
-            return (validMethodInfo, validSignature, validOffset, validIsPointer).Apply((methodInfo, signature, offset, isPointer) =>
-                new StaticAddressInfo(methodInfo, signature, offset, isPointer));
+            return (validMethodInfo, validSignature, validOffset, validIsPointer, validInstructionSize).Apply((methodInfo, signature, offset, isPointer, instructionSize) =>
+                new StaticAddressInfo(methodInfo, signature, offset, isPointer, instructionSize));
         }
 
         public void RenderAddress(IndentedStringBuilder builder, StructInfo structInfo) {
             builder.AppendLine(
-                $"public static readonly Address {MethodInfo.Name} = new StaticAddress(\"{structInfo.Name}.{MethodInfo.Name}\", \"{SignatureInfo.Signature}\", {SignatureInfo.GetByteArrayString()}, {SignatureInfo.GetMaskArrayString()}, 0, {Offset});");
+                $"public static readonly Address {MethodInfo.Name} = new StaticAddress(\"{structInfo.Name}.{MethodInfo.Name}\", \"{SignatureInfo.Signature}\", {SignatureInfo.GetByteArrayString()}, {SignatureInfo.GetMaskArrayString()}, 0, {Offset}, {this.InstructionSize});");
         }
 
         public void RenderPointer(IndentedStringBuilder builder, StructInfo structInfo) {

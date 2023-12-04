@@ -203,7 +203,7 @@ public sealed partial class Resolver {
                 if (address is StaticAddress staticAddress) {
                     int accessOffset =
                         BitConverter.ToInt32(targetSpan.Slice(outLocation + staticAddress.Offset, 4));
-                    outLocation = outLocation + staticAddress.Offset + 4 + accessOffset;
+                    outLocation = outLocation + staticAddress.Offset + staticAddress.InstructionSize + accessOffset;
                 }
 
                 address.Value = (nuint)(this.baseAddress + this.textSectionOffset + outLocation);

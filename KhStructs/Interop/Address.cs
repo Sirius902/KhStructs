@@ -20,11 +20,13 @@ public class Address {
 }
 
 public sealed class StaticAddress : Address {
-    public StaticAddress(string name, string @string, ulong[] bytes, ulong[] mask, nuint value, int offset) : base(name, @string, bytes, mask, value) {
+    public StaticAddress(string name, string @string, ulong[] bytes, ulong[] mask, nuint value, int offset, int instructionSize) : base(name, @string, bytes, mask, value) {
         this.Offset = offset;
+        this.InstructionSize = instructionSize;
 
         this.CacheKey = $"{this.String}+0x{this.Offset:X}";
     }
 
     public int Offset;
+    public int InstructionSize;
 }
