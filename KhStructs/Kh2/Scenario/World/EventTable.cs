@@ -3,7 +3,7 @@ namespace KhStructs.Kh2.Scenario.World;
 // size=0x98
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct EventTable {
-    [FixedSizeArray<Pointer<WorldEventsHeader>>(TableSize)]
+    [FixedSizeArray<Pointer<WorldEventList>>(TableSize)]
     public fixed byte WorldEvents[0x8 * TableSize];
 
     public const int TableSize = (int)World.TheWorldThatNeverWas + 1;
