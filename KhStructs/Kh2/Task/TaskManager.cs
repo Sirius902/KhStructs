@@ -1,4 +1,4 @@
-namespace KhStructs.Game.Kh2.Task;
+namespace KhStructs.Kh2.Task;
 
 // TASK_MANAGER
 //   ALLOCATOR

@@ -1,9 +1,9 @@
-namespace KhStructs.Game.Kh2.GameObject;
+namespace KhStructs.Kh2.Object.GameObject;
 
 [Flags]
-public enum Flags120 {
+public enum Flags6C8 {
     Flag0 = 1 << 0,
-    IsWeapon = 1 << 1,
+    Flag1 = 1 << 1,
     Flag2 = 1 << 2,
     Flag3 = 1 << 3,
     Flag4 = 1 << 4,
@@ -18,11 +18,11 @@ public enum Flags120 {
     Flag13 = 1 << 13,
     Flag14 = 1 << 14,
     Flag15 = 1 << 15,
-    AerialDodged = 1 << 16,
-    Jumping = 1 << 17,
+    Flag16 = 1 << 16,
+    Flag17 = 1 << 17,
     Flag18 = 1 << 18,
-    Deleted = 1 << 19,
-    BattleStance = 1 << 20,
+    Flag19 = 1 << 19,
+    Flag20 = 1 << 20,
     Flag21 = 1 << 21,
     Flag22 = 1 << 22,
     Flag23 = 1 << 23,
@@ -30,7 +30,7 @@ public enum Flags120 {
     Flag25 = 1 << 25,
     Flag26 = 1 << 26,
     Flag27 = 1 << 27,
-    MarkedForDelete = 1 << 28,
+    Flag28 = 1 << 28,
     Flag29 = 1 << 29,
     Flag30 = 1 << 30,
     Flag31 = 1 << 31,

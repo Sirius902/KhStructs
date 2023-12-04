@@ -1,4 +1,4 @@
-namespace KhStructs.Game.Kh2.GameObject;
+namespace KhStructs.Kh2.Object.GameObject;
 
 // YS::SORA
 

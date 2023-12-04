@@ -1,7 +1,7 @@
-using KhStructs.Game.Kh2.GameObject.VTable;
-using KhStructs.Game.Kh2.Math;
+using KhStructs.Kh2.Math;
+using KhStructs.Kh2.Object.GameObject.VTable;
 
-namespace KhStructs.Game.Kh2.GameObject;
+namespace KhStructs.Kh2.Object.GameObject;
 
 // YS::OBJ
 

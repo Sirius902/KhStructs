@@ -1,4 +1,4 @@
-namespace KhStructs.Game.Kh2;
+namespace KhStructs.Kh2;
 
 // ALLOCATOR
 

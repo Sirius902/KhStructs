@@ -1,4 +1,4 @@
-namespace KhStructs.Game.Kh2.Math;
+namespace KhStructs.Kh2.Math;
 
 [StructLayout(LayoutKind.Sequential)]
 public struct Vector3 {

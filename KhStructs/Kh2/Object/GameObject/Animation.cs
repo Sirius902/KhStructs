@@ -1,6 +1,6 @@
-using KhStructs.Game.Kh2.Math;
+using KhStructs.Kh2.Math;
 
-namespace KhStructs.Game.Kh2.GameObject;
+namespace KhStructs.Kh2.Object.GameObject;
 
 // TODO: Might be larger.
 // size=0x210
