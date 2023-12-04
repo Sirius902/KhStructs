@@ -10,10 +10,10 @@ public unsafe partial struct Hash {
     public static partial void* Lookup(int hash);
 
     /// <summary>
-    /// Inserts a pointer into the global address table and returns its hash.
+    /// Inserts a pointer into the global address table if not already inserted and returns its hash.
     /// </summary>
     /// <param name="ptr">The pointer whose address will be inserted into the table.</param>
     /// <returns>The hash of the pointer's address.</returns>
     [MemberFunction("E8 ?? ?? ?? ?? 89 46 14")]
-    public static partial int Insert(void* ptr);
+    public static partial int GetOrInsert(void* ptr);
 }

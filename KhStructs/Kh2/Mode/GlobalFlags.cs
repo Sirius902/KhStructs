@@ -1,4 +1,4 @@
-namespace KhStructs.Kh2.Mode.GameMode;
+namespace KhStructs.Kh2.Mode;
 
 [Flags]
 public enum GlobalFlags {

@@ -1,4 +1,4 @@
-namespace KhStructs.Kh2.Object.GameObject;
+namespace KhStructs.Kh2.Object;
 
 [Flags]
 public enum Flags6C8 {

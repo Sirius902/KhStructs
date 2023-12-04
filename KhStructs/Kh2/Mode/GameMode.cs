@@ -1,6 +1,6 @@
-using TaskManager = KhStructs.Kh2.Task.TaskManager;
+using KhStructs.Kh2.Task;
 
-namespace KhStructs.Kh2.Mode.GameMode;
+namespace KhStructs.Kh2.Mode;
 
 // GAME_MODE
 

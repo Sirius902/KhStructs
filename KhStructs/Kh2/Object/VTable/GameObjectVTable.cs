@@ -1,4 +1,4 @@
-namespace KhStructs.Kh2.Object.GameObject.VTable;
+namespace KhStructs.Kh2.Object.VTable;
 
 // YS::OBJ::VTABLE<T>
 //   YS::OBJ::IVTABLE

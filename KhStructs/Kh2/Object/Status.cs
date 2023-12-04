@@ -1,6 +1,6 @@
-namespace KhStructs.Kh2.Object.GameObject;
+namespace KhStructs.Kh2.Object;
 
-// TODO: Status is definitely larger than this.
+// TODO: Status is definitely larger than this and also an array.
 // size=???
 [StructLayout(LayoutKind.Explicit, Size = 0xC)]
 public struct Status {

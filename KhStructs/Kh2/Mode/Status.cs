@@ -1,4 +1,4 @@
-namespace KhStructs.Kh2.Mode.GameMode;
+namespace KhStructs.Kh2.Mode;
 
 public enum Status {
     Inactive = 0,
