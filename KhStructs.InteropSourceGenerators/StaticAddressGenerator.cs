@@ -118,7 +118,7 @@ internal sealed class StaticAddressGenerator : IIncrementalGenerator {
 
         public void RenderAddress(IndentedStringBuilder builder, StructInfo structInfo) {
             builder.AppendLine(
-                $"public static readonly Address {MethodInfo.Name} = new StaticAddress(\"{structInfo.Name}.{MethodInfo.Name}\", \"{SignatureInfo.Signature}\", {SignatureInfo.GetByteArrayString()}, {SignatureInfo.GetMaskArrayString()}, 0, {Offset}, {this.InstructionSize});");
+                $"public static readonly Address {MethodInfo.Name} = new StaticAddress(\"{structInfo.Name}.{MethodInfo.Name}\", \"{structInfo.Namespace}\", \"{SignatureInfo.Signature}\", {SignatureInfo.GetByteArrayString()}, {SignatureInfo.GetMaskArrayString()}, 0, {Offset}, {this.InstructionSize});");
         }
 
         public void RenderPointer(IndentedStringBuilder builder, StructInfo structInfo) {

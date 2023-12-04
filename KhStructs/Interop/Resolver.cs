@@ -7,6 +7,13 @@ namespace KhStructs.Interop;
 
 public sealed partial class Resolver {
     private static readonly Lazy<Resolver> Instance = new(() => new Resolver());
+    private static readonly Dictionary<SupportedGame, string> GameNamespaces = new() {
+        [SupportedGame.Kh1] = $"{nameof(KhStructs)}.{nameof(Kh1)}",
+        [SupportedGame.Kh2] = $"{nameof(KhStructs)}.{nameof(Kh2)}",
+        [SupportedGame.ReCom] = $"{nameof(KhStructs)}.{nameof(ReCom)}",
+        [SupportedGame.Bbs] = $"{nameof(KhStructs)}.{nameof(Bbs)}",
+        [SupportedGame.Ddd] = $"{nameof(KhStructs)}.{nameof(Ddd)}",
+    };
 
     private Resolver() {
     }
@@ -158,7 +165,7 @@ public sealed partial class Resolver {
     }
 
     // This function is a bit messy, but everything to make it cleaner is slower, so don't bother.
-    public unsafe void Resolve() {
+    public unsafe void Resolve(SupportedGame game) {
         if (this.hasResolved)
             return;
 
@@ -181,6 +188,9 @@ public sealed partial class Resolver {
 
             for (var i = 0; i < avLen; i++) {
                 var address = availableAddresses[i];
+
+                // TODO: This is probably very slow, possibly fix by putting addresses into categories based on namespace.
+                if (!AddressIsForGame(address, game)) continue;
 
                 int count;
                 var length = address.Bytes.Length;
@@ -225,6 +235,20 @@ public sealed partial class Resolver {
 
         this.SaveCache();
         this.hasResolved = true;
+    }
+
+    private static bool AddressIsForGame(Address address, SupportedGame game) {
+        using var iterator = GameNamespaces.GetEnumerator();
+        while (iterator.MoveNext()) {
+            if (!address.Namespace.StartsWith(iterator.Current.Value)) continue;
+            if (iterator.Current.Key != game) {
+                return false;
+            }
+
+            break;
+        }
+
+        return true;
     }
 
     private void RegisterAddress(Address address) {

@@ -109,7 +109,7 @@ internal sealed class MemberFunctionGenerator : IIncrementalGenerator {
 
         public void RenderAddress(IndentedStringBuilder builder, StructInfo structInfo) {
             builder.AppendLine(
-                $"public static readonly Address {MethodInfo.Name} = new Address(\"{structInfo.Name}.{MethodInfo.Name}\", \"{SignatureInfo.Signature}\", {SignatureInfo.GetByteArrayString()}, {SignatureInfo.GetMaskArrayString()}, 0);");
+                $"public static readonly Address {MethodInfo.Name} = new Address(\"{structInfo.Name}.{MethodInfo.Name}\", \"{structInfo.Namespace}\", \"{SignatureInfo.Signature}\", {SignatureInfo.GetByteArrayString()}, {SignatureInfo.GetMaskArrayString()}, 0);");
         }
 
         public void RenderFunctionPointer(IndentedStringBuilder builder, StructInfo structInfo) {
