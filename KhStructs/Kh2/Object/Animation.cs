@@ -1,3 +1,4 @@
+using KhStructs.Kh2.Bar;
 using KhStructs.Math;
 
 namespace KhStructs.Kh2.Object;
@@ -6,8 +7,8 @@ namespace KhStructs.Kh2.Object;
 // size=0x210
 [StructLayout(LayoutKind.Explicit, Size = 0x210)]
 public unsafe partial struct Animation {
-    [FieldOffset(0x00)] public void* MsetFile;
-    [FieldOffset(0x08)] public void* PriorityMsetFile;
+    [FieldOffset(0x00)] public BarFile* MsetFile;
+    [FieldOffset(0x08)] public BarFile* PriorityMsetFile;
     [FieldOffset(0x10)] public GameObject* Object;
     [FieldOffset(0x1C)] public void* Motion;
     [FieldOffset(0x20)] public void* PVoid20;

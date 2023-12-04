@@ -1,3 +1,5 @@
+using KhStructs.Kh2.Bar;
+using KhStructs.Kh2.Object.Entry;
 using KhStructs.Kh2.Object.VTable;
 using KhStructs.Math;
 
@@ -71,7 +73,7 @@ public unsafe partial struct GameObject {
 
     [FieldOffset(0x8B8)] public void* PVoid8B8;
 
-    [FieldOffset(0x920)] public void* MdlxFile;
+    [FieldOffset(0x920)] public BarFile* MdlxFile;
 
     [FixedSizeArray<nint>(8)]
     [FieldOffset(0x938)] public fixed byte PVoidArray938[16 * 8];
@@ -95,11 +97,18 @@ public unsafe partial struct GameObject {
 
     [FieldOffset(0xDC0)] public void* PVoidDC0;
 
-    [FieldOffset(0xDE0)] public Form Form;
+    [FieldOffset(0xDE0)] public ObjectForm Form;
 
     [FieldOffset(0xE08)] public nint QWordE08;
 
     public GameObjectVTable* VTable() => (GameObjectVTable*)Hash.Lookup(this.VTableHash);
+
+    public ObjectEntry* ObjectEntry() => (ObjectEntry*)Hash.Lookup(this.ObjectEntryHash);
+
+    // TODO: Add Action.
+    public void* Action() => Hash.Lookup(this.ActionEntryHash);
+
+    public GameObject* Parent() => (GameObject*)Hash.Lookup(this.ParentHash);
 
     [StaticAddress("81 8F ?? ?? ?? ?? ?? ?? ?? ?? 48 89 3D ?? ?? ?? ??", 13, isPointer: true)]
     public static partial GameObject* InitialPlayer();
