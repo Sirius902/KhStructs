@@ -41,7 +41,7 @@ public unsafe partial struct GameObject {
 
     [FieldOffset(0x134)] public int MovementFlags134;
 
-    [FieldOffset(0x158)] public Animation animation;
+    [FieldOffset(0x158)] public Animation Animation;
 
     [FieldOffset(0x390)] public void* PVoid390;
 
