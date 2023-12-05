@@ -38,7 +38,7 @@ public unsafe partial struct GXDevice {
     [FieldOffset(0x4C8)] public void* PStruct4C8;
     [FieldOffset(0x4D0)] public ID3D12DescriptorHeap* SamplerDescriptorHeap;
 
-    [StaticAddress("75 99 48 8D 0D ?? ?? ?? ??", 5, isPointer: false)]
+    [StaticAddress("7F 52 48 8D 0D ?? ?? ?? ??", 5, isPointer: false)]
     public static partial GXDevice* Instance();
 
     [MemberFunction("E8 ?? ?? ?? ?? 89 AF ?? ?? ?? ?? F3 0F 10 47 ??")]
