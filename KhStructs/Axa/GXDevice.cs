@@ -41,6 +41,10 @@ public unsafe partial struct GXDevice {
     [StaticAddress("7F 52 48 8D 0D ?? ?? ?? ??", 5, isPointer: false)]
     public static partial GXDevice* Instance();
 
+    // TODO: Something may be wrong with this function prototype.
     [MemberFunction("E8 ?? ?? ?? ?? 89 AF ?? ?? ?? ?? F3 0F 10 47 ??")]
-    public static partial HRESULT InitSwapchain(GXDevice* device);
+    public static partial HRESULT CreateSwapchain(GXDevice* device);
+
+    [MemberFunction("48 89 5C 24 ?? 57 48 83 EC 20 48 8B DA 48 8B F9 E8 ?? ?? ?? ?? 48 8B C8")]
+    public static partial int CreateGameWindow(HWND hwnd, AppInterface* app, int a3);
 }
