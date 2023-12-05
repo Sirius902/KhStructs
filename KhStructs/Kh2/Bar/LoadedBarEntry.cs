@@ -17,6 +17,6 @@ public unsafe partial struct LoadedBarEntry {
 
     public static LoadedBarEntry* ListLast() => ListHead() + 1;
 
-    [MemberFunction("48 8B 1D ?? ?? ?? ?? 8B F1 48 85 DB 74 74")]
+    [StaticAddress("48 8B 1D ?? ?? ?? ?? 8B F1 48 85 DB 74 74", 3, isPointer: true)]
     public static partial LoadedBarEntry* ListHead();
 }
