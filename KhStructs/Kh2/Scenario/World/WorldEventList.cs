@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 namespace KhStructs.Kh2.Scenario.World;
 
 // size=variable
@@ -10,10 +12,6 @@ public unsafe struct WorldEventList {
     public int Dword0;
     public uint NumEntries;
 
-    public Span<WorldEventEntry> Entries {
-        get {
-            fixed (WorldEventList* list = &this)
-                return new Span<WorldEventEntry>(list + 1, 0x4 * (int)this.NumEntries);
-        }
-    }
+    public Span<WorldEventEntry> Entries =>
+        new((WorldEventList*)Unsafe.AsPointer(ref this) + 1, 0x4 * (int)this.NumEntries);
 }

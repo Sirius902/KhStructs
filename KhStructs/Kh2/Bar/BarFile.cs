@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 namespace KhStructs.Kh2.Bar;
 
 // size=variable
@@ -9,10 +11,5 @@ namespace KhStructs.Kh2.Bar;
 public unsafe struct BarFile {
     public BarHeader Header;
 
-    public Span<BarEntry> Entries {
-        get {
-            fixed (BarFile* bar = &this)
-                return new Span<BarEntry>(bar + 1, (int)this.Header.SubfileCount);
-        }
-    }
+    public Span<BarEntry> Entries => new((BarFile*)Unsafe.AsPointer(ref this) + 1, (int)this.Header.SubfileCount);
 }
