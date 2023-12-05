@@ -1,5 +1,5 @@
 # KhStructs
-API to assist in reverse engineering and providing raw access to native internals and structures of Kingdom Hearts PC port games.
+An API to assist in reverse engineering and providing raw access to native internals and structures of Kingdom Hearts PC port games.
 
 Contains code from [FFXIVClientStructs](https://github.com/aers/FFXIVClientStructs) which is licensed under the MIT license.
 
@@ -8,7 +8,7 @@ Contains code from [FFXIVClientStructs](https://github.com/aers/FFXIVClientStruc
 
 ## Games
 
-The following games are supported by KhStructs.
+The International and Japanese versions of the following games are supported by KhStructs.
 * KINGDOM HEARTS FINAL MIX
 * KINGDOM HEARTS II FINAL MIX
 * KINGDOM HEARTS Re:Chain of Memories
