@@ -41,6 +41,9 @@ public unsafe partial struct AppInterface {
     [StaticAddress("48 89 35 ?? ?? ?? ?? 48 8B C6", 3, isPointer: true)]
     public static partial AppInterface* Instance();
 
+    [StaticAddress("0F 84 ?? ?? ?? ?? 44 38 25 ?? ?? ?? ??", 9, isPointer: false)]
+    public static partial bool* MouseActive();
+
     [MemberFunction("48 89 51 08 48 89 4A 08")]
     public static partial void LinkAppAndSettingMenu(AppInterface* app, void* settingMenu);
 
