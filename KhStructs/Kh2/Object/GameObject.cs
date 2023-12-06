@@ -1,7 +1,11 @@
-using KhStructs.Kh2.Bar;
+using KhStructs.Kh2.Command;
 using KhStructs.Kh2.Object.Entry;
+using KhStructs.Kh2.Object.Util;
 using KhStructs.Kh2.Object.VTable;
+using KhStructs.Kh2.Script;
+using KhStructs.Kh2.Task;
 using KhStructs.Math;
+using KhStructs.Util;
 
 namespace KhStructs.Kh2.Object;
 
@@ -11,11 +15,13 @@ namespace KhStructs.Kh2.Object;
 // size=0xE10
 [StructLayout(LayoutKind.Explicit, Size = 0xE10)]
 public unsafe partial struct GameObject {
-    [FieldOffset(0x00)] public int VTableHash;
-    [FieldOffset(0x04)] public int ThisHash;
-    [FieldOffset(0x08)] public int ObjectEntryHash;
-    [FieldOffset(0x0C)] public int ActionEntryHash;
-    [FieldOffset(0x10)] public int Hash10;
+    [FieldOffset(0x00)] public Hash<GameObjectVTable> VTableHash;
+
+    // Hash<GameObject>
+    [FieldOffset(0x04)] public Hash ThisHash;
+    [FieldOffset(0x08)] public Hash<ObjectEntry> ObjectEntryHash;
+    [FieldOffset(0x0C)] public Hash ActionEntryHash;
+    [FieldOffset(0x10)] public Hash Hash10;
 
     [FieldOffset(0x20)] public Vector4 AirVelocity;
 
@@ -43,13 +49,13 @@ public unsafe partial struct GameObject {
 
     [FieldOffset(0x158)] public Animation Animation;
 
-    [FieldOffset(0x390)] public void* PVoid390;
+    [FieldOffset(0x390)] public ScriptAction* Action;
 
-    [FieldOffset(0x5B0)] public void* AIScript;
+    [FieldOffset(0x5B0)] public Script.Script* Script;
     [FieldOffset(0x5B8)] public int RefCount;
 
     // TODO: This is definitely only on things that have YS::BTLOBJ.
-    [FieldOffset(0x5C0)] public Status* BattleStatus;
+    [FieldOffset(0x5C0)] public Status.Status* Status;
 
     [FieldOffset(0x5D8)] public void* PVoid5D8;
 
@@ -61,27 +67,34 @@ public unsafe partial struct GameObject {
 
     [FieldOffset(0x670)] public Vector4 Position;
 
-    [FieldOffset(0x6A0)] public int ParentHash;
+    // Hash<GameObject>
+    [FieldOffset(0x6A0)] public Hash ParentHash;
 
     [FieldOffset(0x6C8)] public Flags6C8 Flags6C8;
 
     [FieldOffset(0x6D0)] public Vector4 PreviousPosition;
     [FieldOffset(0x6E0)] public Vector4 Velocity;
 
+    [FieldOffset(0x740)] public int DWord740;
+
     [FieldOffset(0x7B0)] public void* PVoid7B0;
     [FieldOffset(0x7B8)] public int DWord7B8;
 
     [FieldOffset(0x8B8)] public void* PVoid8B8;
 
-    [FieldOffset(0x920)] public BarFile* MdlxFile;
+    [FieldOffset(0x910)] public ObjectData ObjectData;
 
     [FixedSizeArray<nint>(8)]
     [FieldOffset(0x938)] public fixed byte PVoidArray938[16 * 8];
+
     [FieldOffset(0x9B8)] public Flags9B8 Flags9B8;
 
     [FieldOffset(0x9F0)] public void* PVoid9F0;
 
-    [FieldOffset(0xA90)] public int NextHash;
+    [FieldOffset(0xA68)] public Vector4 SpawnPosRot;
+
+    // Hash<GameObject>
+    [FieldOffset(0xA90)] public Hash NextHash;
 
     [FieldOffset(0xAC0)] public byte ByteAC0;
 
@@ -89,29 +102,69 @@ public unsafe partial struct GameObject {
 
     [FieldOffset(0xBA8)] public float AnimationEndDelay;
 
+    [FieldOffset(0xBB0)] public Hash<int> BankHash;
+    [FieldOffset(0xBB4)] public Hash VoiceHash;
+
+    [FieldOffset(0xCF0)] public uint ReactionCommand;
+
     [FieldOffset(0xD48)] public void* PVoidD48;
 
-    [FieldOffset(0xD60)] public GameObject* WeaponListHead;
-    [FieldOffset(0xD68)] public GameObject* WeaponListLast;
-    [FieldOffset(0xD70)] public int PartyIndex;
+    [FixedSizeArray<Pointer<Weapon>>(2)]
+    [FieldOffset(0xD60)] public fixed byte Weapons[2 * 8];
 
-    [FieldOffset(0xDC0)] public void* PVoidDC0;
+    [FieldOffset(0xD70)] public int PartyDataIndex;
 
-    [FieldOffset(0xDE0)] public ObjectForm Form;
+    [FieldOffset(0xDC0)] public UnkCommandStruct* UnkCommandStruct;
+
+    // TODO: Might be PlayerCommand.
+    [FieldOffset(0xDD0)] public FieldCommand* FieldCommand;
+
+    [FieldOffset(0xDE0)] public Enum32<ObjectForm> Form;
 
     [FieldOffset(0xE08)] public nint QWordE08;
 
-    public GameObjectVTable* VTable() => (GameObjectVTable*)Hash.Lookup(this.VTableHash);
+    public static IEnumerable<Pointer<GameObject>> All() => new ObjectEnumerator<GameObject>(&Iterate);
 
-    public ObjectEntry* ObjectEntry() => (ObjectEntry*)Hash.Lookup(this.ObjectEntryHash);
+    public GameObjectVTable* VTable => this.VTableHash.Lookup();
 
-    // TODO: Add Action.
-    public void* Action() => Hash.Lookup(this.ActionEntryHash);
+    public ObjectEntry* Entry => this.ObjectEntryHash.Lookup();
 
-    public GameObject* Parent() => (GameObject*)Hash.Lookup(this.ParentHash);
+    // TODO: Add ActionEntry.
+    public void* ActionEntry => Hash.Lookup(this.ActionEntryHash);
 
-    [StaticAddress("81 8F ?? ?? ?? ?? ?? ?? ?? ?? 48 89 3D ?? ?? ?? ??", 13, isPointer: true)]
-    public static partial GameObject* InitialPlayer();
+    public GameObject* Parent => (GameObject*)Hash.Lookup(this.ParentHash);
+
+    /// <summary>
+    /// Gets the next <see cref="GameObject"/> in the list. This object may be invalid, consider using <see cref="GameObject.Iterate"/>.
+    /// </summary>
+    public GameObject* Next => (GameObject*)Hash.Lookup(this.ParentHash);
+
+    [StaticAddress("48 8B 15 ?? ?? ?? ?? 33 FF 8B C7", 3, isPointer: false)]
+    public static partial NativeList<GameObject>* List();
+
+    [StaticAddress("74 51 48 8B 0D ?? ?? ?? ??", 5, isPointer: true)]
+    public static partial TaskManager* TaskManager();
+
+    [MemberFunction("E8 ?? ?? ?? ?? 33 C0 F3 0F 11 B3 ?? ?? ?? ??")]
+    public partial GameObject* Create(ObjectId id, ObjectEntry* entry, byte priority, Vector4* pos, float rot);
+
+    [MemberFunction("48 89 5C 24 ?? 57 48 83 EC 20 48 8B F9 48 81 C1 ?? ?? ?? ?? E8 ?? ?? ?? ?? 48 8B 9F ?? ?? ?? ??")]
+    public partial void Dispose();
+
+    [MemberFunction("E9 ?? ?? ?? ?? CC 40 53 48 83 EC 20 8B 81 ?? ?? ?? ??")]
+    public partial void DisposeVirtual();
+
+    [MemberFunction("E8 ?? ?? ?? ?? 48 8B F8 48 85 C0 74 4B")]
+    public static partial GameObject* Spawn(ObjectId id, Vector4* pos, float rot);
+
+    [MemberFunction("E8 ?? ?? ?? ?? F3 0F 5C C6 0F 57 C9")]
+    public partial float GetGroundHeight();
+
+    [MemberFunction("E8 ?? ?? ?? ?? 84 C0 74 68 8B CB")]
+    public partial Bool8 CanAct();
+
+    [MemberFunction("E8 ?? ?? ?? ?? 83 E8 01 74 2A 83 E8 0D")]
+    public partial int GetSkeletonType();
 
     /// <summary>
     /// Returns the address of the next valid game object after <paramref name="gameObject"/> or null if there are no more.
@@ -119,8 +172,14 @@ public unsafe partial struct GameObject {
     /// <param name="gameObject">The game object to find the next of or null to get the first <see cref="GameObject"/>.</param>
     /// <returns>The first or next <see cref="GameObject"/>.</returns>
     [MemberFunction("E8 ?? ?? ?? ?? 48 85 C0 75 DF")]
-    public static partial GameObject* Next(GameObject* gameObject);
+    public static partial GameObject* Iterate(GameObject* gameObject);
 
     [MemberFunction("E8 ?? ?? ?? ?? 84 C0 74 A4")]
-    public static partial bool IsValid(GameObject* gameObject);
+    public static partial Bool8 IsValid(GameObject* gameObject);
+
+    [MemberFunction("E8 ?? ?? ?? ?? 83 F8 65")]
+    public partial int GetPartyDataIndex();
+
+    [MemberFunction("E8 ?? ?? ?? ?? 49 8B CE 44 0F B6 E0")]
+    public partial Bool8 IsHidden();
 }

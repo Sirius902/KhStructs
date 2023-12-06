@@ -26,9 +26,7 @@ public class VersionGenerator : ISourceGenerator {
 
         var output = new StringBuilder();
 
-        gitProcess.OutputDataReceived += (_, e) => {
-            output.Append(e.Data);
-        };
+        gitProcess.OutputDataReceived += (_, e) => { output.Append(e.Data); };
 
         gitProcess.Start();
         gitProcess.BeginOutputReadLine();
@@ -36,7 +34,10 @@ public class VersionGenerator : ISourceGenerator {
         gitProcess.CancelOutputRead();
         return output.ToString();
     }
-    public void Initialize(GeneratorInitializationContext context) { }
+
+    public void Initialize(GeneratorInitializationContext context) {
+    }
+
     public void Execute(GeneratorExecutionContext context) {
         var hash = GitCommand(context, "show -s --format=%H");
         var count = GitCommand(context, $"rev-list --count {hash}");

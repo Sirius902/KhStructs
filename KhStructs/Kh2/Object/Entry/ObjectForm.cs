@@ -1,6 +1,6 @@
 namespace KhStructs.Kh2.Object.Entry;
 
-public enum ObjectForm {
+public enum ObjectForm : byte {
     Sora = 0,
     Valor = 1,
     Wisdom = 2,

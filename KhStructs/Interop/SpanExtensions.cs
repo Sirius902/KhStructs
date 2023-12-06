@@ -21,6 +21,7 @@ public static class SpanExtensions {
             this.items = span;
             this.currentIndex = -1;
         }
+
         public bool MoveNext() => ++this.currentIndex < this.items.Length;
         public readonly T* Current => (T*)Unsafe.AsPointer(ref this.items[this.currentIndex]);
         public SpanPointerEnumerator<T> GetEnumerator() => new(this.items);

@@ -6,6 +6,7 @@ namespace KhStructs.Kh2.Party;
 public unsafe partial struct PartyList {
     [FixedSizeArray<Pointer<Object.GameObject>>(3)]
     public fixed byte Members[3 * 8];
+
     public fixed int Flags18[3];
 
     public Object.GameObject* Player => Instance()->MembersSpan[0];

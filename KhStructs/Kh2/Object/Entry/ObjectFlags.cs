@@ -2,7 +2,7 @@ namespace KhStructs.Kh2.Object.Entry;
 
 [Flags]
 public enum ObjectFlags : ushort {
-    NoApdx = 1 << 0,
+    NoLocalization = 1 << 0,
     Before = 1 << 1,
     FixColor = 1 << 2,
     Fly = 1 << 3,

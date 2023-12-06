@@ -45,7 +45,8 @@ internal sealed record MethodInfo(string Name, string Modifiers, string ReturnTy
             ));
     }
 
-    public string GetParameterTypeString() => Parameters.Any() ? string.Join(", ", Parameters.Map(p => p.Type)) + ", " : "";
+    public string GetParameterTypeString() =>
+        Parameters.Any() ? string.Join(", ", Parameters.Map(p => p.Type)) + ", " : "";
 
     public string GetParameterNamesString() => string.Join(", ", Parameters.Map(p => p.Name));
 
@@ -59,7 +60,8 @@ internal sealed record MethodInfo(string Name, string Modifiers, string ReturnTy
         builder.Indent();
     }
 
-    public void RenderStartOverload(IndentedStringBuilder builder, string origType, string replaceType, Option<string> ignoreArgument) {
+    public void RenderStartOverload(IndentedStringBuilder builder, string origType, string replaceType,
+        Option<string> ignoreArgument) {
         string paramString = string.Join(", ", Parameters
             .Map(p => p.Type == origType && p.Name != ignoreArgument ? p with { Type = replaceType } : p)
             .Map(p => $"{p.Type} {p.Name}{p.DefaultValue.Match(Some: (p) => $" = {p}", None: "")}"));

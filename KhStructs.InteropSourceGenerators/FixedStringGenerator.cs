@@ -14,7 +14,8 @@ internal sealed class FixedStringGenerator : IIncrementalGenerator {
     private const string AttributeName = "KhStructs.Interop.Attributes.FixedStringAttribute";
 
     public void Initialize(IncrementalGeneratorInitializationContext context) {
-        IncrementalValuesProvider<(Validation<DiagnosticInfo, StructInfo> StructInfo, Validation<DiagnosticInfo, FixedStringInfo> FixedStringInfo)> structAndFixedStringInfos =
+        IncrementalValuesProvider<(Validation<DiagnosticInfo, StructInfo> StructInfo,
+            Validation<DiagnosticInfo, FixedStringInfo> FixedStringInfo)> structAndFixedStringInfos =
             context.SyntaxProvider
                 .ForAttributeWithMetadataName(
                     AttributeName,
@@ -26,7 +27,8 @@ internal sealed class FixedStringGenerator : IIncrementalGenerator {
                         }
                     },
                     static (context, _) => {
-                        StructDeclarationSyntax structSyntax = (StructDeclarationSyntax)context.TargetNode.Parent!.Parent!.Parent!;
+                        StructDeclarationSyntax structSyntax =
+                            (StructDeclarationSyntax)context.TargetNode.Parent!.Parent!.Parent!;
 
                         IFieldSymbol fieldSymbol = (IFieldSymbol)context.TargetSymbol;
 
@@ -35,7 +37,8 @@ internal sealed class FixedStringGenerator : IIncrementalGenerator {
                     });
 
         // group by struct
-        IncrementalValuesProvider<(Validation<DiagnosticInfo, StructInfo> StructInfo, Validation<DiagnosticInfo, Seq<FixedStringInfo>> FixedStringInfos)> groupedStructInfoWithFixedStringInfos =
+        IncrementalValuesProvider<(Validation<DiagnosticInfo, StructInfo> StructInfo,
+            Validation<DiagnosticInfo, Seq<FixedStringInfo>> FixedStringInfos)> groupedStructInfoWithFixedStringInfos =
             structAndFixedStringInfos.TupleGroupByValidation();
 
         // make sure caching is working
@@ -76,14 +79,17 @@ internal sealed class FixedStringGenerator : IIncrementalGenerator {
                 });
             Option<AttributeData> attribute = fieldSymbol.GetFirstAttributeDataByTypeName(AttributeName);
 
-            Validation<DiagnosticInfo, string> validPropertyName = attribute.GetValidAttributeArgument<string>("PropertyName", 0, AttributeName, fieldSymbol);
+            Validation<DiagnosticInfo, string> validPropertyName =
+                attribute.GetValidAttributeArgument<string>("PropertyName", 0, AttributeName, fieldSymbol);
 
             return (validSymbol, validPropertyName).Apply((symbol, propertyName) =>
-                new FixedStringInfo(symbol.Name, symbol.FixedSize, string.IsNullOrEmpty(propertyName) ? $"{symbol.Name}String" : propertyName));
+                new FixedStringInfo(symbol.Name, symbol.FixedSize,
+                    string.IsNullOrEmpty(propertyName) ? $"{symbol.Name}String" : propertyName));
         }
 
         public void RenderFixedString(IndentedStringBuilder builder) {
-            builder.AppendLine($"public string {PropertyName} {{ get {{ fixed (byte* p = {FieldName}) {{ var str = Encoding.UTF8.GetString(p, {MaxLength}); var nullIdx = str.IndexOf('\0'); return nullIdx >= 0 ? str[..nullIdx] : str; }} }} }}");
+            builder.AppendLine(
+                $"public string {PropertyName} {{ get {{ fixed (byte* p = {FieldName}) {{ var str = Encoding.UTF8.GetString(p, {MaxLength}); var nullIdx = str.IndexOf('\0'); return nullIdx >= 0 ? str[..nullIdx] : str; }} }} }}");
         }
     }
 

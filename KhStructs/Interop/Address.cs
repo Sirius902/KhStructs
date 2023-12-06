@@ -22,7 +22,8 @@ public class Address {
 }
 
 public sealed class StaticAddress : Address {
-    public StaticAddress(string name, string @namespace, string @string, ulong[] bytes, ulong[] mask, nuint value, int offset, int instructionSize) : base(name, @namespace, @string, bytes, mask, value) {
+    public StaticAddress(string name, string @namespace, string @string, ulong[] bytes, ulong[] mask, nuint value,
+        int offset, int instructionSize) : base(name, @namespace, @string, bytes, mask, value) {
         this.Offset = offset;
         this.InstructionSize = instructionSize;
 

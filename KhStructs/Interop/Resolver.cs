@@ -7,6 +7,7 @@ namespace KhStructs.Interop;
 
 public sealed partial class Resolver {
     private static readonly Lazy<Resolver> Instance = new(() => new Resolver());
+
     private static readonly Dictionary<SupportedGame, string> GameNamespaces = new() {
         [SupportedGame.Kh1] = $"{nameof(KhStructs)}.{nameof(Kh1)}",
         [SupportedGame.Kh2] = $"{nameof(KhStructs)}.{nameof(Kh2)}",
@@ -64,7 +65,8 @@ public sealed partial class Resolver {
     }
 
     public void SetupSearchSpace(nint memoryPointer, int memorySize, int textSectionOffset, int textSectionSize,
-        int dataSectionOffset, int dataSectionSize, int rdataSectionOffset, int rdataSectionSize, FileInfo? cacheFile = null) {
+        int dataSectionOffset, int dataSectionSize, int rdataSectionOffset, int rdataSectionSize,
+        FileInfo? cacheFile = null) {
         if (this.isSetup) return;
         this.baseAddress = memoryPointer;
         this.targetSpace = memoryPointer;
@@ -122,6 +124,7 @@ public sealed partial class Resolver {
             sectionCursor = sectionCursor[40..]; // advance by 40
         }
     }
+
     private void LoadCache() {
         if (this.cacheFile is not { Exists: true }) {
             this.textCache = new ConcurrentDictionary<string, long>();
@@ -130,7 +133,9 @@ public sealed partial class Resolver {
 
         try {
             var json = File.ReadAllText(this.cacheFile.FullName);
-            this.textCache = JsonSerializer.Deserialize(json, ResolverJsonContext.Default.ConcurrentDictionaryStringInt64) ?? new ConcurrentDictionary<string, long>();
+            this.textCache =
+                JsonSerializer.Deserialize(json, ResolverJsonContext.Default.ConcurrentDictionaryStringInt64) ??
+                new ConcurrentDictionary<string, long>();
         } catch {
             this.textCache = new ConcurrentDictionary<string, long>();
         }
@@ -139,7 +144,8 @@ public sealed partial class Resolver {
     private void SaveCache() {
         if (this.cacheFile == null || this.textCache == null || this.cacheChanged == false)
             return;
-        var json = JsonSerializer.Serialize(this.textCache, ResolverJsonContext.Default.ConcurrentDictionaryStringInt64);
+        var json = JsonSerializer.Serialize(this.textCache,
+            ResolverJsonContext.Default.ConcurrentDictionaryStringInt64);
         if (string.IsNullOrWhiteSpace(json))
             return;
         if (this.cacheFile.Directory is { Exists: false })
@@ -170,14 +176,16 @@ public sealed partial class Resolver {
             return;
 
         if (this.targetSpace == 0)
-            throw new Exception("[KhStructs.Resolver] Attempted to call Resolve() without initializing the search space.");
+            throw new Exception(
+                "[KhStructs.Resolver] Attempted to call Resolve() without initializing the search space.");
 
         if (this.textCache is not null) {
             if (this.ResolveFromCache())
                 return;
         }
 
-        var targetSpan = new ReadOnlySpan<byte>(this.targetSpace.ToPointer(), this.targetLength)[this.textSectionOffset..];
+        var targetSpan =
+            new ReadOnlySpan<byte>(this.targetSpace.ToPointer(), this.targetLength)[this.textSectionOffset..];
 
         for (var location = 0; location < this.textSectionSize; location++) {
             if (this.preResolveArray[targetSpan[location]] is null) continue;
@@ -196,7 +204,8 @@ public sealed partial class Resolver {
                 var length = address.Bytes.Length;
 
                 for (count = 0; count < length; count++) {
-                    if ((address.Mask[count] & address.Bytes[count]) != (address.Mask[count] & targetLocationAsUlong[count]))
+                    if ((address.Mask[count] & address.Bytes[count]) !=
+                        (address.Mask[count] & targetLocationAsUlong[count]))
                         break;
                 }
 
@@ -231,7 +240,8 @@ public sealed partial class Resolver {
                     goto outLoop;
             }
         }
-        outLoop:;
+
+        outLoop: ;
 
         this.SaveCache();
         this.hasResolved = true;

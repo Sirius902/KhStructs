@@ -27,7 +27,8 @@ internal sealed class FixedSizeArrayGenerator : IIncrementalGenerator {
                         }
                     },
                     static (context, _) => {
-                        StructDeclarationSyntax structSyntax = (StructDeclarationSyntax)context.TargetNode.Parent!.Parent!.Parent!;
+                        StructDeclarationSyntax structSyntax =
+                            (StructDeclarationSyntax)context.TargetNode.Parent!.Parent!.Parent!;
 
                         IFieldSymbol fieldSymbol = (IFieldSymbol)context.TargetSymbol;
 
@@ -37,8 +38,9 @@ internal sealed class FixedSizeArrayGenerator : IIncrementalGenerator {
 
         // group by struct
         IncrementalValuesProvider<(Validation<DiagnosticInfo, StructInfo> StructInfo,
-            Validation<DiagnosticInfo, Seq<FixedSizeArrayInfo>> FixedSizeArrayInfos)> groupedStructInfoWithFixedSizeArrayInfos =
-            structAndFixedSizeArrayInfos.TupleGroupByValidation();
+                Validation<DiagnosticInfo, Seq<FixedSizeArrayInfo>> FixedSizeArrayInfos)>
+            groupedStructInfoWithFixedSizeArrayInfos =
+                structAndFixedSizeArrayInfos.TupleGroupByValidation();
 
         // make sure caching is working
         IncrementalValuesProvider<Validation<DiagnosticInfo, StructWithFixedArrayInfos>> structWithFixedInfos =
@@ -80,7 +82,8 @@ internal sealed class FixedSizeArrayGenerator : IIncrementalGenerator {
                 fieldSymbol.GetFirstAttributeDataByTypeName(AttributeName.Replace("`1", ""));
             Validation<DiagnosticInfo, string> validType =
                 attribute
-                    .Bind<string>(attrData => attrData.AttributeClass?.TypeArguments.First().GetFullyQualifiedNameWithGenerics())
+                    .Bind<string>(attrData =>
+                        attrData.AttributeClass?.TypeArguments.First().GetFullyQualifiedNameWithGenerics())
                     .ToValidation(
                         DiagnosticInfo.Create(
                             AttributeGenericTypeArgumentInvalid,
@@ -94,11 +97,13 @@ internal sealed class FixedSizeArrayGenerator : IIncrementalGenerator {
         }
 
         public void RenderFixedSizeArraySpan(IndentedStringBuilder builder) {
-            builder.AppendLine($"public Span<{TypeName}> {FieldName}Span => new(Unsafe.AsPointer(ref {FieldName}[0]), {Count});");
+            builder.AppendLine(
+                $"public Span<{TypeName}> {FieldName}Span => new(Unsafe.AsPointer(ref {FieldName}[0]), {Count});");
         }
     }
 
-    private sealed record StructWithFixedArrayInfos(StructInfo StructInfo, Seq<FixedSizeArrayInfo> FixedSizeArrayInfos) {
+    private sealed record StructWithFixedArrayInfos
+        (StructInfo StructInfo, Seq<FixedSizeArrayInfo> FixedSizeArrayInfos) {
         public string RenderSource() {
             IndentedStringBuilder builder = new();
 

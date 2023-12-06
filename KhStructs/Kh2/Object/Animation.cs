@@ -1,5 +1,6 @@
 using KhStructs.Kh2.Bar;
 using KhStructs.Math;
+using KhStructs.Util;
 
 namespace KhStructs.Kh2.Object;
 
@@ -11,7 +12,9 @@ public unsafe partial struct Animation {
     [FieldOffset(0x08)] public BarFile* PriorityMsetFile;
     [FieldOffset(0x10)] public GameObject* Object;
     [FieldOffset(0x1C)] public void* Motion;
+
     [FieldOffset(0x20)] public void* PVoid20;
+
     // TODO: Make MotionId an enum.
     [FieldOffset(0x28)] public int MotionId28;
     [FieldOffset(0x2C)] public int MotionId2C;
@@ -26,9 +29,11 @@ public unsafe partial struct Animation {
     [FieldOffset(0x50)] public int DWord50;
     [FieldOffset(0x54)] public int DWord54;
 
+    // TODO: This may also be a NativeList.
     [FieldOffset(0xD8)] public Animation* WeaponAnimationListHead;
 
-    [FieldOffset(0xE8)] public int NextWeaponAnimationHash;
+    // TypedHash<Animation>
+    [FieldOffset(0xE8)] public Hash NextWeaponAnimationHash;
 
     [FieldOffset(0x130)] public Vector3 Vec130;
     [FieldOffset(0x13C)] public Vector3 Vec13C;
@@ -44,6 +49,14 @@ public unsafe partial struct Animation {
     [FieldOffset(0x200)] public void* PVoid200;
     [FieldOffset(0x208)] public void* PVoid208;
 
+    public Animation* NextWeaponAnimation => (Animation*)Hash.Lookup(this.NextWeaponAnimationHash);
+
     [MemberFunction("E8 ?? ?? ?? ?? 44 39 76 30")]
-    public static partial void PlayMotion(Animation* animation, int motionId, float a3, float a4);
+    public partial Bool8 PlayMotion(int motionId, float a3, float a4);
+
+    [MemberFunction("E8 ?? ?? ?? ?? 48 8B 0B 8B D0")]
+    public partial int MotionIdToIndex(int motionId);
+
+    [MemberFunction("E8 ?? ?? ?? ?? 45 33 D2 48 8D 4B 38")]
+    public partial int ImposeAnimation(GameObject* target, int motionId, float blendTime);
 }

@@ -1,4 +1,5 @@
 using KhStructs.Kh2.Task;
+using KhStructs.Util;
 
 namespace KhStructs.Kh2.Mode;
 
@@ -9,30 +10,36 @@ namespace KhStructs.Kh2.Mode;
 public unsafe partial struct GameMode {
     public void* vtbl;
     public TaskManager* TaskManager;
+
     public int DWord10;
-    public int NextHash;
+
+    // TypedHash<GameMode>
+    public Hash NextHash;
     public int DWord18;
     public int DWord1C;
     public int DWord20;
     public Status Status;
     public void* PVoid28;
 
-    public static GameMode* ListTail() => ListHead() + 1;
-
-    [StaticAddress("C6 05 ?? ?? ?? ?? ?? 33 D2 48 8B CF", 2, isPointer: false, 5)]
-    public static partial bool* SoftResetFlag();
+    public GameMode* Next => (GameMode*)Hash.Lookup(this.NextHash);
 
     [StaticAddress("BA ?? ?? ?? ?? 89 05 ?? ?? ?? ?? 48 89 05 ?? ?? ?? ?? 8D 48 01", 7, isPointer: false)]
     public static partial ControlFlags* ControlFlags();
 
-    [StaticAddress("48 89 1D ?? ?? ?? ?? E8 ?? ?? ?? ?? 89 43 14 EB 0F", 3, isPointer: true)]
-    public static partial GameMode* ListHead();
+    [StaticAddress("48 89 1D ?? ?? ?? ?? E8 ?? ?? ?? ?? 89 43 14 EB 0F", 3, isPointer: false)]
+    public static partial NativeList<GameMode>* List();
 
     [StaticAddress("8B 05 ?? ?? ?? ?? 85 C0 0F 85 ?? ?? ?? ?? 8B 05 ?? ?? ?? ??", 2, isPointer: false)]
     public static partial GlobalFlags* GlobalFlags();
 
+    [MemberFunction("E8 ?? ?? ?? ?? 48 8B 74 24 ?? 48 8B 5C 24 ?? 48 8B 7C 24 ?? 32 C0")]
+    public static partial void StartSoftReset();
+
+    [MemberFunction("E8 ?? ?? ?? ?? 84 C0 0F 84 ?? ?? ?? ?? E8 ?? ?? ?? ?? 32 C0")]
+    public static partial Bool8 IsSoftResetDisabled();
+
     [MemberFunction("E8 ?? ?? ?? ?? 4C 8D 05 ?? ?? ?? ?? 48 8B CF")]
-    public static partial GameMode* GameplayInstance();
+    public static partial GameMode* FieldInstance();
 
     [MemberFunction("E8 ?? ?? ?? ?? 48 8B F0 E8 ?? ?? ?? ?? 48 8B F8")]
     public static partial GameMode* TitleInstance();
@@ -50,5 +57,5 @@ public unsafe partial struct GameMode {
     public static partial GameMode* GummiMenuInstance();
 
     [MemberFunction("E8 ?? ?? ?? ?? 89 58 30")]
-    public static partial Task.Task* QueueGameplayTask(int a1, int priority, delegate* unmanaged<Task.Task*, void> run);
+    public static partial Task.Task* QueueFieldTask(int a1, int priority, delegate* unmanaged<Task.Task*, void> run);
 }
