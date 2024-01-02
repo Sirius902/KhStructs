@@ -13,6 +13,12 @@ public unsafe partial struct Scene {
 
     public const int WorldMax = (int)Kh2.Scene.World.World.TheWorldThatNeverWas + 1;
 
+    [StaticAddress("F3 0F 11 05 ?? ?? ?? ?? F3 0F 11 0D ?? ?? ?? ?? 48 8B F9", 4, isPointer: false)]
+    public static partial float* MaxLoad();
+
+    [StaticAddress("F3 0F 11 05 ?? ?? ?? ?? F3 0F 11 0D ?? ?? ?? ?? 48 8B F9", 12, isPointer: false)]
+    public static partial float* CurrentLoad();
+
     /// <summary>
     /// Returns the current game scene. When starting the game but before a save file is loaded on the title screen,
     /// this structure will be set to all 0xFF bytes. Do not use functions that expect valid scene values when this is true.
@@ -53,4 +59,7 @@ public unsafe partial struct Scene {
 
     [MemberFunction("E8 ?? ?? ?? ?? 8D 4D 18")]
     public static partial Allocator* AllocatorInstance();
+
+    [MemberFunction("48 89 5C 24 ?? 57 48 83 EC 20 F3 0F 10 05 ?? ?? ?? ?? 33 DB")]
+    public static partial void InitParams(Params* sceneParams);
 }

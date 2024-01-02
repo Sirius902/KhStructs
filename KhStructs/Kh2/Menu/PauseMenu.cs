@@ -11,7 +11,7 @@ public unsafe partial struct PauseMenu {
 
     [StaticAddress("FF 15 ?? ?? ?? ?? 48 89 2D ?? ?? ?? ?? 40 38 2D ?? ?? ?? ?? 75 0C 33 D2 48 8B CE", 2,
         isPointer: false)]
-    public static partial delegate* unmanaged<void>* Callback();
+    public static partial delegate* unmanaged[Stdcall]<void>* Callback();
 
     [MemberFunction("E8 ?? ?? ?? ?? 4C 8B 7C 24 ?? 84 C0")]
     public static partial Bool8 IsRunning();

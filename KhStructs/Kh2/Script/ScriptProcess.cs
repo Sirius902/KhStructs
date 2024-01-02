@@ -16,7 +16,7 @@ public unsafe partial struct ScriptProcess {
 
     [MemberFunction("E8 ?? ?? ?? ?? 48 8B 5E 48")]
     public partial ScriptStatus Execute(void* syscallTable,
-        delegate* unmanaged<ScriptProcess*, ScriptStatus, void*, void> debugCallback, void* debugUserData);
+        delegate* unmanaged[Stdcall]<ScriptProcess*, ScriptStatus, void*, void> debugCallback, void* debugUserData);
 
     [MemberFunction("4C 8B 01 41 83 78 ?? ??")]
     public partial int GetEntrypointPc(int entrypointId);

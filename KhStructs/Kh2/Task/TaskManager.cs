@@ -24,13 +24,13 @@ public unsafe partial struct TaskManager {
     public static partial TaskManager* Create(Allocator* allocator);
 
     [MemberFunction("E8 ?? ?? ?? ?? 89 58 18 48 83 C4 20")]
-    public partial Task* CreateTask(int mask, int priority, delegate* unmanaged<Task*, void> run);
+    public partial Task* CreateTask(int mask, int priority, delegate* unmanaged[Stdcall]<Task*, void> run);
 
     [MemberFunction("E8 ?? ?? ?? ?? 88 58 18")]
-    public partial Task* CreateThread(int mask, int priority, delegate* unmanaged<Task*, void> run);
+    public partial Task* CreateThread(int mask, int priority, delegate* unmanaged[Stdcall]<Task*, void> run);
 
     [MemberFunction("33 C0 48 85 C0 75 06")]
-    public partial Bool8 TaskExists(delegate* unmanaged<Task*, void> run);
+    public partial Bool8 TaskExists(delegate* unmanaged[Stdcall]<Task*, void> run);
 
     /// <summary>
     /// Finishes and frees a task.

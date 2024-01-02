@@ -6,9 +6,27 @@ public unsafe partial struct BarTable {
     [StaticAddress("48 8B 1D ?? ?? ?? ?? 8B F1 48 85 DB 74 74", 3, isPointer: false)]
     public static partial NativeList<BarTableEntry>* List();
 
+    [StaticAddress("4C 89 25 ?? ?? ?? ?? 41 8B F4", 3, isPointer: false)]
+    public static partial NativeList<BarTableEntry>* ClearList();
+
+    [StaticAddress("E8 ?? ?? ?? ?? 48 89 05 ?? ?? ?? ?? 33 C0 89 05 ?? ?? ?? ??", 8, isPointer: false)]
+    public static partial MemoryAllocator** Allocator();
+
+    [StaticAddress("48 8D 0D ?? ?? ?? ?? E8 ?? ?? ?? ?? 48 89 05 ?? ?? ?? ?? 33 C0", 3, isPointer: false)]
+    public static partial byte* AllocatorBuffer();
+
     // TODO: Find out length. Possibly 7.
     [StaticAddress("89 05 ?? ?? ?? ?? 48 89 05 ?? ?? ?? ?? 89 05 ?? ?? ?? ?? C7 05 ?? ?? ?? ?? ?? ?? ?? ??", 2, isPointer: false)]
     public static partial int* GroupSizeTable();
+
+    [StaticAddress("4C 8D 35 ?? ?? ?? ?? 4C 89 75 C0", 3, isPointer: false)]
+    public static partial byte* StorageBegin();
+
+    [StaticAddress("48 8B 35 ?? ?? ?? ?? 4C 8D 35 ?? ?? ?? ??", 3, isPointer: false)]
+    public static partial byte** UngroupedFlushBegin();
+
+    [StaticAddress("48 89 35 ?? ?? ?? ?? 48 8B 4D F8", 3, isPointer: false)]
+    public static partial byte** UngroupedFlushEnd();
 
     // TODO: I don't believe this should return a value but hooking it causes the inner function to be hooked so to be safe it should probably be typed with a return value.
     [MemberFunction("E8 ?? ?? ?? ?? 8B 4B 50 85 C9")]
@@ -39,10 +57,10 @@ public unsafe partial struct BarTable {
     public static partial void Release(BarFile* bar);
 
     [MemberFunction("40 57 48 83 EC 50 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 44 24 ?? 48 8B F9")]
-    public static partial BarFile* Alloc(nuint size);
+    public static partial void* Alloc(nuint size);
 
     [MemberFunction("40 53 48 83 EC 20 80 39 42")]
-    public static partial void Free(BarFile* bar);
+    public static partial void Free(void* ptr);
 
     [MemberFunction("E8 ?? ?? ?? ?? 83 0F 01")]
     public static partial void Clean(int priority);
@@ -66,8 +84,17 @@ public unsafe partial struct BarTable {
     public static partial void SetPartyGroupSize(int playerSize, int friendSize);
 
     [MemberFunction("E8 ?? ?? ?? ?? 49 83 C6 08 41 FF C7")]
-    public static partial void Insert(BarTableEntry* entry);
+    public static partial void InsertEntry(BarTableEntry* entry);
+
+    [MemberFunction("E8 ?? ?? ?? ?? 8B 43 48 89 43 68")]
+    public static partial void RemoveEntry(BarTableEntry* entry);
 
     [MemberFunction("48 89 5C 24 ?? 57 48 83 EC 20 48 8B 1D ?? ?? ?? ?? 48 8D 3D ?? ?? ?? ??")]
     public static partial nuint RemainingCapacity();
+
+    [MemberFunction("E8 ?? ?? ?? ?? 83 F8 02 7C 2F")]
+    public static partial Enum32<BarTableEntryStatus> GetStatus(Utf8StringView fileName);
+
+    [MemberFunction("E8 ?? ?? ?? ?? 48 8B 1D ?? ?? ?? ?? 48 8B 2D ?? ?? ?? ??")]
+    public static partial void Commit();
 }

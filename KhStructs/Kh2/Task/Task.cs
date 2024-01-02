@@ -5,14 +5,14 @@ namespace KhStructs.Kh2.Task;
 // size=0x98
 [StructLayout(LayoutKind.Explicit, Size = 0x98)]
 public unsafe partial struct Task {
-    [FieldOffset(0x00)] public delegate* unmanaged<Task*, void> Run;
+    [FieldOffset(0x00)] public delegate* unmanaged[Stdcall]<Task*, void> Run;
 
     [FieldOffset(0x18)] public void* UserData;
 
     [FieldOffset(0x58)] public TaskManager* TaskManager;
     [FieldOffset(0x60)] public int Mask;
     [FieldOffset(0x64)] public int Priority;
-    [FieldOffset(0x68)] public delegate* unmanaged<Task*, void> Finish;
+    [FieldOffset(0x68)] public delegate* unmanaged[Stdcall]<Task*, void> Finish;
     [FieldOffset(0x70)] public void* PFiber70;
     [FieldOffset(0x78)] public Task* Next;
     [FieldOffset(0x80)] public Task* Previous;

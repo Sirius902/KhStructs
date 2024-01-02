@@ -5,7 +5,7 @@ namespace KhStructs.Kh2.Bar;
 public unsafe partial struct BarTableEntry {
     [FieldOffset(0x00)] public BarTableEntryTag Tag;
     [FieldOffset(0x01)] public BarTableEntryStatus Status;
-    [FieldOffset(0x02)] public short RefCount;
+    [FieldOffset(0x02)] public ushort RefCount;
 
     [FixedString("FileName")]
     [FieldOffset(0x04)] public fixed byte FileNameBytes[0x20];
@@ -15,7 +15,7 @@ public unsafe partial struct BarTableEntry {
     [FieldOffset(0x4C)] public int Int4C;
     [FieldOffset(0x50)] public nuint FileSize;
     [FieldOffset(0x58)] public BarFile* BarFile;
-    [FieldOffset(0x60)] public BarFile* LoadedBarFile;
+    [FieldOffset(0x60)] public BarFile* PrevBarFileLocation;
 
     [FieldOffset(0x68)] public short Bank;
     [FieldOffset(0x6A)] public short Word6A;
@@ -33,9 +33,9 @@ public unsafe partial struct BarTableEntry {
 }
 
 public enum BarTableEntryTag : byte {
-    Type0 = 0,
+    Tag0 = 0,
     Localization = 1,
-    Type2 = 2,
+    Tag2 = 2,
 }
 
 public enum BarTableEntryStatus : byte {

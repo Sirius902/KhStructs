@@ -1,3 +1,4 @@
+using KhStructs.Kh2.Bar;
 using KhStructs.Util;
 
 namespace KhStructs.Kh2.Object.Entry;
@@ -82,4 +83,7 @@ public unsafe partial struct ObjectEntry {
     /// will be a temporary view of the path and it should be copied to store long term.</returns>
     [MemberFunction("E8 ?? ?? ?? ?? 48 85 C0 74 11 BA ?? ?? ?? ??")]
     public partial Utf8StringView GetMsetPath(ObjectId id, byte* outBuf);
+
+    [MemberFunction("E8 ?? ?? ?? ?? A8 08 75 3E")]
+    public static partial uint GetBarTableStatus(ObjectId id, ObjectEntry* entry);
 }
