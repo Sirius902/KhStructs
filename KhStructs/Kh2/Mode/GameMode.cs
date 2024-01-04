@@ -32,6 +32,9 @@ public unsafe partial struct GameMode {
     [StaticAddress("8B 05 ?? ?? ?? ?? 85 C0 0F 85 ?? ?? ?? ?? 8B 05 ?? ?? ?? ??", 2, isPointer: false)]
     public static partial GlobalFlags* GlobalFlags();
 
+    [MemberFunction("40 57 48 83 EC 40 83 79 24 03")]
+    public partial void Start();
+
     [MemberFunction("E8 ?? ?? ?? ?? 48 8B 74 24 ?? 48 8B 5C 24 ?? 48 8B 7C 24 ?? 32 C0")]
     public static partial void StartSoftReset();
 
