@@ -24,9 +24,10 @@ public unsafe partial struct Status {
     [FieldOffset(0x196)] public short BaseMaxAp;
 
     [FieldOffset(0x1AF)] public DriveMode DriveMode;
-
+    [FieldOffset(0x1B0)] public byte DriveGaugeFill;
+    [FieldOffset(0x1B1)] public byte DriveGaugeBars;
+    [FieldOffset(0x1B2)] public byte DriveGaugeBarsMax;
     [FieldOffset(0x1B3)] public byte DriveDisplayNumBars;
-
     [FieldOffset(0x1B4)] public float DriveGaugeTimer;
     [FieldOffset(0x1B8)] public float DriveGaugeMaxTimer;
     [FieldOffset(0x1BC)] public float MpChargeTimer;
@@ -53,4 +54,7 @@ public unsafe partial struct Status {
 
     [MemberFunction("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 45 0F B6 C1")]
     public partial void AddHp(int delta, byte a3, Bool8 a4);
+
+    [MemberFunction("E8 ?? ?? ?? ?? 44 0F BE 43 ??")]
+    public partial Bool8 IsMpCharge();
 }
