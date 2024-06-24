@@ -35,16 +35,20 @@ public unsafe partial struct AppInterface {
     [FixedString("GameResourceWebdavBasePath")] [FieldOffset(0x860)]
     public fixed byte GameResourceWebdavBasePathBytes[512];
 
+    // TODO: Steam is 0x1290
     [FieldOffset(0x1268)] public int MainProcResult;
 
+    // TODO: Steam is 0x1298
     [FieldOffset(0x1270)] public int MainProcResultOverride;
 
+    // TODO: Steam is 0x12A0
     /// <summary>
     /// Two DirectInput8 keyboard state buffers. To obtain the correct key states, index with <see cref="KeyboardBufferIndex"/>
     /// multiplied by 256.
     /// </summary>
     [FieldOffset(0x1278)] public fixed byte DirectInputKeyboardBuffers[2 * 256];
 
+    // TODO: Steam is 0x14A0
     [FieldOffset(0x1478)] public int KeyboardBufferIndex;
 
     [StaticAddress("48 89 35 ?? ?? ?? ?? 48 8B C6", 3, isPointer: true)]
