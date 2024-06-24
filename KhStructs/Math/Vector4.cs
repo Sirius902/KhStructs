@@ -14,6 +14,13 @@ public struct Vector4 {
         this.W = w;
     }
 
+    public Vector4(Vector3 v, float w) {
+        this.X = v.X;
+        this.Y = v.Y;
+        this.Z = v.Z;
+        this.W = w;
+    }
+
     public static implicit operator System.Numerics.Vector4(Vector4 vec) => new(vec.X, vec.Y, vec.Z, vec.W);
     public static implicit operator Vector4(System.Numerics.Vector4 vec) => new(vec.X, vec.Y, vec.Z, vec.W);
 }

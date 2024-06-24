@@ -1,6 +1,6 @@
 namespace KhStructs.Kh2.Magic;
 
-public enum Element {
+public enum Element : byte {
     Fire = 0,
     Blizzard = 1,
     Thunder = 2,

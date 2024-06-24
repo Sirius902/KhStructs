@@ -60,5 +60,6 @@ public unsafe partial struct GameMode {
     public static partial GameMode* GummiMenuInstance();
 
     [MemberFunction("E8 ?? ?? ?? ?? 89 58 30")]
-    public static partial Task.Task* QueueFieldTask(int a1, int priority, delegate* unmanaged[Stdcall]<Task.Task*, void> run);
+    public static partial Task.Task* QueueFieldTask(int a1, int priority,
+        delegate* unmanaged[Stdcall]<Task.Task*, void> run);
 }

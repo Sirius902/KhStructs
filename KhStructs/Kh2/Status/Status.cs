@@ -55,6 +55,21 @@ public unsafe partial struct Status {
     [MemberFunction("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 45 0F B6 C1")]
     public partial void AddHp(int delta, byte a3, Bool8 a4);
 
+    [MemberFunction("E8 ?? ?? ?? ?? 83 FE 06")]
+    public partial void AddMp(int delta, Bool8 a2);
+
+    [MemberFunction("F3 0F 10 81 ?? ?? ?? ?? 0F 57 D2 0F 2F C2")]
+    public partial void AddMpChargeTime(float delta);
+
+    [MemberFunction("0F B6 81 ?? ?? ?? ?? 03 C2")]
+    public partial void AddDrive(int delta);
+
+    [MemberFunction("E8 ?? ?? ?? ?? EB A4 CC")]
+    public partial void AddDriveTime(float delta);
+
     [MemberFunction("E8 ?? ?? ?? ?? 44 0F BE 43 ??")]
     public partial Bool8 IsMpCharge();
+
+    [MemberFunction("E8 ?? ?? ?? ?? 0F B6 47 10")]
+    public partial void ApplyItem(Enum32<Item.Item> item);
 }

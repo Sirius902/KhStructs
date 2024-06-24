@@ -21,7 +21,6 @@ public unsafe partial struct GamePad {
 
     [StructLayout(LayoutKind.Sequential)]
     public partial struct StateArray {
-        [FixedSizeArray<GamePad>(8)]
-        public fixed byte Pads[8 * 0x140];
+        [FixedSizeArray<GamePad>(8)] public fixed byte Pads[8 * 0x140];
     }
 }

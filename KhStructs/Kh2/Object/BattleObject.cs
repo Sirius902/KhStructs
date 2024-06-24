@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 using KhStructs.Kh2.Object.Entry;
 using KhStructs.Kh2.Object.Util;
 using KhStructs.Math;
+using KhStructs.Util;
 
 namespace KhStructs.Kh2.Object;
 
@@ -29,4 +30,7 @@ public unsafe partial struct BattleObject {
     /// </summary>
     [MemberFunction("E8 ?? ?? ?? ?? 48 85 C0 75 DD")]
     public static partial BattleObject* Iterate(BattleObject* battleObject);
+
+    [MemberFunction("E8 ?? ?? ?? ?? 0F B6 46 01 3C 01")]
+    public partial void AddMp(int delta, Bool8 a2);
 }

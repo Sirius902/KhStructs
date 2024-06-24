@@ -1,0 +1,17 @@
+using KhStructs.Kh2.Object;
+using KhStructs.Kh2.Object.Entry;
+using KhStructs.Util;
+
+namespace KhStructs.Kh2.Level;
+
+public unsafe partial struct FormLevel {
+    [StaticAddress("48 8B 15 ?? ?? ?? ?? 41 8B C4", 3, isPointer: false)]
+    public static partial void* LevelData();
+
+    [MemberFunction(
+        "48 89 5C 24 ?? 48 89 6C 24 ?? 56 57 41 56 48 81 EC ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 84 24 ?? ?? ?? ?? 48 8B 81 ?? ?? ?? ??")]
+    public static partial void LevelUpForm(Player* player, Enum32<ObjectForm> form);
+
+    [MemberFunction("E8 ?? ?? ?? ?? 48 8B 8C 24 ?? ?? ?? ?? 48 33 CC E8 ?? ?? ?? ?? 48 81 C4 ?? ?? ?? ?? 41 5D 5B")]
+    public static partial void ShowLevelUpEffect(BattleObject* target);
+}

@@ -14,8 +14,8 @@ public unsafe partial struct AppInterface {
     [FieldOffset(0x10)] public int OpenSettingMenu;
     [FieldOffset(0x14)] public int NumGamepadsToRead;
 
-    [FixedSizeArray<PadData>(8)]
-    [FieldOffset(0x18)] public fixed byte PadData[8 * 0x40];
+    [FixedSizeArray<PadData>(8)] [FieldOffset(0x18)]
+    public fixed byte PadData[8 * 0x40];
 
     [FieldOffset(0x218)] public int MousePlugged;
 
@@ -23,17 +23,17 @@ public unsafe partial struct AppInterface {
 
     [FieldOffset(0x25C)] public int GameStatus;
 
-    [FixedString("AxaBasePath")]
-    [FieldOffset(0x260)] public fixed byte AxaBasePathBytes[512];
+    [FixedString("AxaBasePath")] [FieldOffset(0x260)]
+    public fixed byte AxaBasePathBytes[512];
 
-    [FixedString("WebdavBasePath")]
-    [FieldOffset(0x460)] public fixed byte WebdavBasePathBytes[512];
+    [FixedString("WebdavBasePath")] [FieldOffset(0x460)]
+    public fixed byte WebdavBasePathBytes[512];
 
-    [FixedString("GameResourceBasePath")]
-    [FieldOffset(0x660)] public fixed byte GameResourceBasePathBytes[512];
+    [FixedString("GameResourceBasePath")] [FieldOffset(0x660)]
+    public fixed byte GameResourceBasePathBytes[512];
 
-    [FixedString("GameResourceWebdavBasePath")]
-    [FieldOffset(0x860)] public fixed byte GameResourceWebdavBasePathBytes[512];
+    [FixedString("GameResourceWebdavBasePath")] [FieldOffset(0x860)]
+    public fixed byte GameResourceWebdavBasePathBytes[512];
 
     [FieldOffset(0x1268)] public int MainProcResult;
 

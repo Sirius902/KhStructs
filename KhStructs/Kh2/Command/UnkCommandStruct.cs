@@ -6,6 +6,7 @@ namespace KhStructs.Kh2.Command;
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct UnkCommandStruct {
     public FieldCommand FieldCommand;
+    public LockOn LockOn;
 
     public PlayerCommand* PlayerCommand => (PlayerCommand*)Unsafe.AsPointer(ref this.FieldCommand.PlayerCommand);
 

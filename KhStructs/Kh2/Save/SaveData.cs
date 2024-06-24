@@ -1,4 +1,3 @@
-using KhStructs.Kh2.Object.Entry;
 using KhStructs.Kh2.Scene.World;
 
 namespace KhStructs.Kh2.Save;
@@ -7,15 +6,15 @@ namespace KhStructs.Kh2.Save;
 // size=0x10FC0
 [StructLayout(LayoutKind.Explicit, Size = 0x10FC0)]
 public unsafe partial struct SaveData {
-    [FixedString("FileMagic")]
-    [FieldOffset(0x00)] public fixed byte FileMagicBytes[4];
+    [FixedString("FileMagic")] [FieldOffset(0x00)]
+    public fixed byte FileMagicBytes[4];
 
     [FieldOffset(0x0C)] public World World;
     [FieldOffset(0x0D)] public byte Room;
     [FieldOffset(0x0E)] public byte Entrance;
 
-    [FixedSizeArray<WorldSceneParams>(Scene.Scene.WorldMax)]
-    [FieldOffset(0x10)] public fixed byte WorldSceneParams[Scene.Scene.WorldMax * 0x40 * 6];
+    [FixedSizeArray<WorldSceneParams>(Scene.Scene.WorldMax)] [FieldOffset(0x10)]
+    public fixed byte WorldSceneParams[Scene.Scene.WorldMax * 0x40 * 6];
 
     [FieldOffset(0x24F0)] public BattleData Battle;
 

@@ -1,3 +1,4 @@
+using KhStructs.Kh2.Attack;
 using KhStructs.Util;
 
 namespace KhStructs.Kh2.Object.VTable;
@@ -36,6 +37,9 @@ public unsafe partial struct GameObjectVTable {
 
     [VirtualFunction(16)]
     public partial void Hide(GameObject* self);
+
+    [VirtualFunction(24)]
+    public partial void HandleDamage(Damage* damage);
 
     [VirtualFunction(17)]
     public partial void Show(GameObject* self);

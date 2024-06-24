@@ -19,8 +19,8 @@ public unsafe partial struct GameObject {
 
     // Hash<GameObject>
     [FieldOffset(0x04)] public Hash ThisHash;
-    [FieldOffset(0x08)] public Hash<ObjectEntry> ObjectEntryHash;
-    [FieldOffset(0x0C)] public Hash ActionEntryHash;
+    [FieldOffset(0x08)] public Hash<ObjectEntry> EntryHash;
+    [FieldOffset(0x0C)] public Hash<Action> ActionHash;
     [FieldOffset(0x10)] public Hash Hash10;
 
     [FieldOffset(0x20)] public Vector4 AirVelocity;
@@ -44,12 +44,10 @@ public unsafe partial struct GameObject {
 
     [FieldOffset(0x120)] public Flags120 Flags120;
     [FieldOffset(0x124)] public int Flags124;
-
-    [FieldOffset(0x134)] public int MovementFlags134;
-
+    [FieldOffset(0x128)] public Moveset Moveset;
     [FieldOffset(0x158)] public Animation Animation;
 
-    [FieldOffset(0x390)] public ScriptAction* Action;
+    [FieldOffset(0x390)] public ScriptAction* ScriptAction;
 
     [FieldOffset(0x5B0)] public Script.Script* Script;
     [FieldOffset(0x5B8)] public int RefCount;
@@ -84,8 +82,8 @@ public unsafe partial struct GameObject {
 
     [FieldOffset(0x910)] public ObjectData ObjectData;
 
-    [FixedSizeArray<nint>(8)]
-    [FieldOffset(0x938)] public fixed byte PVoidArray938[16 * 8];
+    [FixedSizeArray<nint>(8)] [FieldOffset(0x938)]
+    public fixed byte PVoidArray938[16 * 8];
 
     [FieldOffset(0x9B8)] public Flags9B8 Flags9B8;
 
@@ -102,15 +100,16 @@ public unsafe partial struct GameObject {
 
     [FieldOffset(0xBA8)] public float AnimationEndDelay;
 
-    [FieldOffset(0xBB0)] public Hash<int> BankHash;
+    [FieldOffset(0xBB0)] public Hash<ushort> BankHash;
     [FieldOffset(0xBB4)] public Hash VoiceHash;
 
     [FieldOffset(0xCF0)] public uint ReactionCommand;
 
-    [FieldOffset(0xD48)] public void* PVoidD48;
+    [FieldOffset(0xD48)] public float RevengeValue;
+    [FieldOffset(0xD4C)] public float RevengeValueMax;
 
-    [FixedSizeArray<Pointer<Weapon>>(2)]
-    [FieldOffset(0xD60)] public fixed byte Weapons[2 * 8];
+    [FixedSizeArray<Pointer<Weapon>>(2)] [FieldOffset(0xD60)]
+    public fixed byte Weapons[2 * 8];
 
     [FieldOffset(0xD70)] public int PartyDataIndex;
 
@@ -127,10 +126,9 @@ public unsafe partial struct GameObject {
 
     public GameObjectVTable* VTable => this.VTableHash.Lookup();
 
-    public ObjectEntry* Entry => this.ObjectEntryHash.Lookup();
+    public ObjectEntry* Entry => this.EntryHash.Lookup();
 
-    // TODO: Add ActionEntry.
-    public void* ActionEntry => Hash.Lookup(this.ActionEntryHash);
+    public Action* Action => this.ActionHash.Lookup();
 
     public GameObject* Parent => (GameObject*)Hash.Lookup(this.ParentHash);
 
@@ -182,4 +180,13 @@ public unsafe partial struct GameObject {
 
     [MemberFunction("E8 ?? ?? ?? ?? 49 8B CE 44 0F B6 E0")]
     public partial Bool8 IsHidden();
+
+    [MemberFunction("E8 ?? ?? ?? ?? 84 DB 74 1C")]
+    public partial void* Attach(GameObject* parent, int bone, int flags);
+
+    [MemberFunction("E8 ?? ?? ?? ?? 0F 28 C8 48 8B CB E8 ?? ?? ?? ?? 48 8B CF")]
+    public partial float GetRotation();
+
+    [MemberFunction("E8 ?? ?? ?? ?? 0F 10 45 20")]
+    public partial Vector4* GetDirection(Vector4* result);
 }

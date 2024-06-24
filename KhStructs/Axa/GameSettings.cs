@@ -18,6 +18,6 @@ public unsafe partial struct GameSettings {
     [FieldOffset(0x18)] public short ButtonIconType;
     [FieldOffset(0x1A)] public short CircleConfirm;
 
-    [MemberFunction("E8 ?? ?? ?? ?? 0F BF 08")]
+    [MemberFunction("E8 ?? ?? ?? ?? BE ?? ?? ?? ?? BB ?? ?? ?? ??")]
     public static partial GameSettings* Instance();
 }

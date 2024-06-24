@@ -5,6 +5,6 @@ namespace KhStructs.Kh2.Event;
 public unsafe partial struct EventData {
     [FieldOffset(0x09)] public byte Byte9;
 
-    [FixedString("Name")]
-    [FieldOffset(0x0A)] public fixed byte NameBytes[0x20];
+    [FixedString("Name")] [FieldOffset(0x0A)]
+    public fixed byte NameBytes[0x20];
 }

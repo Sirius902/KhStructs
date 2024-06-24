@@ -1,5 +1,7 @@
 using System.Runtime.CompilerServices;
+using KhStructs.Kh2.Command;
 using KhStructs.Kh2.Object.Entry;
+using KhStructs.Util;
 
 namespace KhStructs.Kh2.Object;
 
@@ -23,4 +25,10 @@ public unsafe partial struct Player {
 
     [StaticAddress("33 C0 89 05 ?? ?? ?? ?? 48 89 05 ?? ?? ?? ?? C3", 4, isPointer: false)]
     public static partial ObjectId* ObjectIdOverride();
+
+    [MemberFunction("48 89 5C 24 ?? 57 48 83 EC 20 48 8B DA 48 8B F9 48 8B D1")]
+    public partial Bool8 CanUseCommand(CommandData* commandData);
+
+    [MemberFunction("48 83 EC 28 48 8B 0D ?? ?? ?? ?? E8 ?? ?? ?? ?? 84 C0 74 1C 48 8B 05 ?? ?? ?? ??")]
+    public partial Bool8 IsAnimationImposed();
 }

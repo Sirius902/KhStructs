@@ -22,4 +22,7 @@ public unsafe partial struct Party {
 
     [MemberFunction("44 89 4C 24 ?? 48 89 4C 24 ?? 53")]
     public partial void ChangeWeapon(Task.Task* task, int partyIndex, Hand hand, Enum32<Item.Item> item);
+
+    [MemberFunction("E8 ?? ?? ?? ?? 44 8B C0 45 33 C9 49 8B D6")]
+    public partial int GetHandBone(Hand hand);
 }

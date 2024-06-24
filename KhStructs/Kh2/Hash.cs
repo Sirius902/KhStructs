@@ -4,6 +4,11 @@ namespace KhStructs.Kh2;
 public unsafe partial struct Hash {
     public uint Value;
 
+    public static Span<nint> TableSpan => new(Table(), 64);
+
+    [StaticAddress("4C 8D 15 ?? ?? ?? ?? 4C 8B C2", 3)]
+    public static partial nint* Table();
+
     /// <summary>
     /// Looks up an address inside the global address table by its hash.
     /// </summary>
@@ -19,13 +24,16 @@ public unsafe partial struct Hash {
     /// <returns>The hash of the pointer's address.</returns>
     [MemberFunction("E8 ?? ?? ?? ?? 89 46 14")]
     public static partial Hash GetOrInsert(void* ptr);
+
+    [MemberFunction("E8 ?? ?? ?? ?? 0F BA F3 1F")]
+    public static partial void CheckResetTable();
 }
 
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct Hash<T>(Hash hash) where T : unmanaged {
     public Hash TypeErased = hash;
 
-    public Hash(void* ptr) : this(Hash.GetOrInsert(ptr)) {
+    public Hash(Pointer<T> ptr) : this(Hash.GetOrInsert(ptr)) {
     }
 
     /// <summary>

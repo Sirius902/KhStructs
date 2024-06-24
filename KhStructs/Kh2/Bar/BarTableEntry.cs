@@ -7,8 +7,8 @@ public unsafe partial struct BarTableEntry {
     [FieldOffset(0x01)] public BarTableEntryStatus Status;
     [FieldOffset(0x02)] public ushort RefCount;
 
-    [FixedString("FileName")]
-    [FieldOffset(0x04)] public fixed byte FileNameBytes[0x20];
+    [FixedString("FileName")] [FieldOffset(0x04)]
+    public fixed byte FileNameBytes[0x20];
 
     [FieldOffset(0x44)] public int Flags44;
     [FieldOffset(0x48)] public int Priority;

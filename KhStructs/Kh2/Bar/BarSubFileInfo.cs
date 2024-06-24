@@ -5,8 +5,7 @@ namespace KhStructs.Kh2.Bar;
 public unsafe partial struct BarSubFileInfo {
     public SubFileType SubFileType;
     public ushort DuplicateFlag;
-    [FixedString("SubFileName")]
-    public fixed byte SubFileNameBytes[4];
+    [FixedString("SubFileName")] public fixed byte SubFileNameBytes[4];
     public Hash SubFileHash;
     public uint SubFileSize;
 }

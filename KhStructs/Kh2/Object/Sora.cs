@@ -38,6 +38,9 @@ public unsafe partial struct Sora {
     [MemberFunction("40 53 48 83 EC 20 48 8B CA 48 8B DA E8 ?? ?? ?? ?? 8B 83 ?? ?? ?? ?? 85 C0")]
     public static partial void VTableDestroy(GameObjectVTable* vtable, Sora* self);
 
+    [MemberFunction("40 53 48 83 EC 20 48 8B CA 48 8B DA E8 ?? ?? ?? ?? 8B 83 ?? ?? ?? ?? C1 E8 02")]
+    public static partial void VTableUpdate(GameObjectVTable* vtable, Sora* self);
+
     [MemberFunction("40 53 48 83 EC 20 8B 05 ?? ?? ?? ?? 48 8B DA")]
     public static partial void VTableUpdateDead(GameObjectVTable* vtable, Sora* self);
 }

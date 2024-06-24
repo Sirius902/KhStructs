@@ -18,6 +18,9 @@ public unsafe partial struct ScriptAction {
 
     [MemberFunction("E8 ?? ?? ?? ?? 8B 4B 04 3B 0B")]
     public partial void Start(Utf8StringView name);
+
+    [MemberFunction("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 80 79 03 01")]
+    public partial void Request(Utf8StringView name);
 }
 
 [StructLayout(LayoutKind.Explicit)]
