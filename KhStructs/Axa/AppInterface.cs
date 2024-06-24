@@ -40,7 +40,7 @@ public unsafe partial struct AppInterface {
     [FieldOffset(0x1270)] public int MainProcResultOverride;
 
     /// <summary>
-    /// Two DirectInput8 keyboard state buffers. To obtain the the correct key states, index with <see cref="KeyboardBufferIndex"/>
+    /// Two DirectInput8 keyboard state buffers. To obtain the correct key states, index with <see cref="KeyboardBufferIndex"/>
     /// multiplied by 256.
     /// </summary>
     [FieldOffset(0x1278)] public fixed byte DirectInputKeyboardBuffers[2 * 256];
