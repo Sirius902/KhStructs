@@ -5,9 +5,9 @@ namespace KhStructs.Axa;
 // Axa::AppInterface
 // Axa.AppInterface
 
-// size=0x1498
+// size=0x14C0
 // ctor is not safely siggable
-[StructLayout(LayoutKind.Explicit, Size = 0x1498)]
+[StructLayout(LayoutKind.Explicit, Size = 0x14C0)]
 public unsafe partial struct AppInterface {
     [FieldOffset(0x00)] public void* vtbl;
     [FieldOffset(0x08)] public void* SettingMenu;
@@ -15,41 +15,40 @@ public unsafe partial struct AppInterface {
     [FieldOffset(0x14)] public int NumGamepadsToRead;
 
     [FixedSizeArray<PadData>(8)] [FieldOffset(0x18)]
-    public fixed byte PadData[8 * 0x40];
+    public fixed byte PadData[8 * 0x44];
 
-    [FieldOffset(0x218)] public int MousePlugged;
+    [FieldOffset(0x238)] public int MousePlugged;
 
-    [FieldOffset(0x254)] public int Language;
+    [FieldOffset(0x274)] public int Language;
 
-    [FieldOffset(0x25C)] public int GameStatus;
+    [FieldOffset(0x27C)] public int GameStatus;
 
-    [FixedString("AxaBasePath")] [FieldOffset(0x260)]
+    [FixedString("AxaBasePath")] [FieldOffset(0x280)]
     public fixed byte AxaBasePathBytes[512];
 
-    [FixedString("WebdavBasePath")] [FieldOffset(0x460)]
+    [FixedString("WebdavBasePath")] [FieldOffset(0x480)]
     public fixed byte WebdavBasePathBytes[512];
 
-    [FixedString("GameResourceBasePath")] [FieldOffset(0x660)]
-    public fixed byte GameResourceBasePathBytes[512];
+    [FixedString("GameResourceBasePath")] [FieldOffset(0x680)]
+    public fixed byte GameResourceBasePathBytes[1024];
 
-    [FixedString("GameResourceWebdavBasePath")] [FieldOffset(0x860)]
-    public fixed byte GameResourceWebdavBasePathBytes[512];
+    [FixedString("GameResourceWebdavBasePath")] [FieldOffset(0xA80)]
+    public fixed byte GameResourceWebdavBasePathBytes[1024];
 
-    // TODO: Steam is 0x1290
-    [FieldOffset(0x1268)] public int MainProcResult;
+    [FixedString("GameReplacePath")] [FieldOffset(0xE80)]
+    public fixed byte GameReplacePathBytes[1024];
 
-    // TODO: Steam is 0x1298
-    [FieldOffset(0x1270)] public int MainProcResultOverride;
+    [FieldOffset(0x1290)] public int MainProcResult;
 
-    // TODO: Steam is 0x12A0
+    [FieldOffset(0x1298)] public int MainProcResultOverride;
+
     /// <summary>
     /// Two DirectInput8 keyboard state buffers. To obtain the correct key states, index with <see cref="KeyboardBufferIndex"/>
     /// multiplied by 256.
     /// </summary>
-    [FieldOffset(0x1278)] public fixed byte DirectInputKeyboardBuffers[2 * 256];
+    [FieldOffset(0x12A0)] public fixed byte DirectInputKeyboardBuffers[2 * 256];
 
-    // TODO: Steam is 0x14A0
-    [FieldOffset(0x1478)] public int KeyboardBufferIndex;
+    [FieldOffset(0x14A0)] public int KeyboardBufferIndex;
 
     [StaticAddress("48 89 35 ?? ?? ?? ?? 48 8B C6", 3, isPointer: true)]
     public static partial AppInterface* Instance();

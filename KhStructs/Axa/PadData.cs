@@ -2,8 +2,8 @@ namespace KhStructs.Axa;
 
 // Axa::PADDATA
 
-// size=0x40
-[StructLayout(LayoutKind.Explicit, Size = 0x40)]
+// size=0x44
+[StructLayout(LayoutKind.Explicit, Size = 0x44)]
 public struct PadData {
     [FieldOffset(0x00)] public PadButtons Buttons;
     [FieldOffset(0x02)] public byte RightStickX;
