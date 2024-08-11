@@ -70,6 +70,6 @@ public unsafe partial struct Status {
     [MemberFunction("E8 ?? ?? ?? ?? 44 0F BE 43 ??")]
     public partial Bool8 IsMpCharge();
 
-    [MemberFunction("E8 ?? ?? ?? ?? 0F B6 47 10")]
+    [MemberFunction("E8 ?? ?? ?? ?? 0F B6 47 11")]
     public partial void ApplyItem(Enum32<Item.Item> item);
 }
