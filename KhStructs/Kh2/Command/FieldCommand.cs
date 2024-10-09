@@ -11,5 +11,5 @@ public unsafe struct FieldCommand {
 
     [FieldOffset(0xBD8)] public nint QWordBD8;
 
-    public Command* Command => (Command*)Unsafe.AsPointer(ref this.PlayerCommand.Command);
+    public Command* Command => (Command*)Unsafe.AsPointer(ref this);
 }

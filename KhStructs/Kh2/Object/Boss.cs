@@ -7,7 +7,7 @@ namespace KhStructs.Kh2.Object;
 public unsafe struct Boss {
     public Enemy Enemy;
 
-    public BattleObject* BattleObject => (BattleObject*)Unsafe.AsPointer(ref this.Enemy.BattleObject);
-    public StandardObject* StandardObject => (StandardObject*)Unsafe.AsPointer(ref this.BattleObject->StandardObject);
-    public GameObject* Object => (GameObject*)Unsafe.AsPointer(ref this.StandardObject->Object);
+    public BattleObject* BattleObject => (BattleObject*)Unsafe.AsPointer(ref this);
+    public StandardObject* StandardObject => (StandardObject*)Unsafe.AsPointer(ref this);
+    public GameObject* Object => (GameObject*)Unsafe.AsPointer(ref this);
 }

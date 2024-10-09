@@ -14,8 +14,8 @@ namespace KhStructs.Kh2.Object;
 public unsafe partial struct Party {
     public BattleObject BattleObject;
 
-    public StandardObject* StandardObject => (StandardObject*)Unsafe.AsPointer(ref this.BattleObject.StandardObject);
-    public GameObject* Object => (GameObject*)Unsafe.AsPointer(ref this.StandardObject->Object);
+    public StandardObject* StandardObject => (StandardObject*)Unsafe.AsPointer(ref this);
+    public GameObject* Object => (GameObject*)Unsafe.AsPointer(ref this);
 
     [MemberFunction("E8 ?? ?? ?? ?? FF C3 83 FB 02 7C DE")]
     public partial void SetWeapon(ObjectId weaponId, Hand hand);

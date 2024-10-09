@@ -17,7 +17,7 @@ public unsafe partial struct BattleObject {
 
     public static IEnumerable<Pointer<BattleObject>> All() => new ObjectEnumerator<BattleObject>(&Iterate);
 
-    public GameObject* Object => (GameObject*)Unsafe.AsPointer(ref this.StandardObject.Object);
+    public GameObject* Object => (GameObject*)Unsafe.AsPointer(ref this);
 
     [MemberFunction("E8 ?? ?? ?? ?? 8B 4B 08 33 F6")]
     public partial BattleObject* Create(ObjectEntry* entry, byte priority, Vector4* pos, float rot);

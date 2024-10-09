@@ -18,10 +18,10 @@ namespace KhStructs.Kh2.Object;
 public unsafe partial struct Sora {
     public Player Player;
 
-    public Party* Party => (Party*)Unsafe.AsPointer(ref this.Player.Party);
-    public BattleObject* BattleObject => (BattleObject*)Unsafe.AsPointer(ref this.Party->BattleObject);
-    public StandardObject* StandardObject => (StandardObject*)Unsafe.AsPointer(ref this.BattleObject->StandardObject);
-    public GameObject* Object => (GameObject*)Unsafe.AsPointer(ref this.StandardObject->Object);
+    public Party* Party => (Party*)Unsafe.AsPointer(ref this);
+    public BattleObject* BattleObject => (BattleObject*)Unsafe.AsPointer(ref this);
+    public StandardObject* StandardObject => (StandardObject*)Unsafe.AsPointer(ref this);
+    public GameObject* Object => (GameObject*)Unsafe.AsPointer(ref this);
 
     [MemberFunction("E8 ?? ?? ?? ?? 48 8B B4 24 ?? ?? ?? ?? 48 8B F8")]
     public partial Sora* Create(ObjectEntry* entry, Enum32<ObjectForm> form, void* input, Vector4* pos, float rot);

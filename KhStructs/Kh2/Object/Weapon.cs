@@ -13,7 +13,7 @@ namespace KhStructs.Kh2.Object;
 public unsafe partial struct Weapon {
     public StandardObject StandardObject;
 
-    public GameObject* Object => (GameObject*)Unsafe.AsPointer(ref this.StandardObject.Object);
+    public GameObject* Object => (GameObject*)Unsafe.AsPointer(ref this);
 
     [MemberFunction("E8 ?? ?? ?? ?? 4C 8B E8 4E 89 AC FF ?? ?? ?? ??")]
     public partial Weapon* Create(ObjectEntry* entry, Party* wielder, int neoMoveset, Hand hand, int priority);

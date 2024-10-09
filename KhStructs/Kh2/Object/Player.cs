@@ -16,9 +16,9 @@ namespace KhStructs.Kh2.Object;
 public unsafe partial struct Player {
     public Party Party;
 
-    public BattleObject* BattleObject => (BattleObject*)Unsafe.AsPointer(ref this.Party.BattleObject);
-    public StandardObject* StandardObject => (StandardObject*)Unsafe.AsPointer(ref this.BattleObject->StandardObject);
-    public GameObject* Object => (GameObject*)Unsafe.AsPointer(ref this.StandardObject->Object);
+    public BattleObject* BattleObject => (BattleObject*)Unsafe.AsPointer(ref this);
+    public StandardObject* StandardObject => (StandardObject*)Unsafe.AsPointer(ref this);
+    public GameObject* Object => (GameObject*)Unsafe.AsPointer(ref this);
 
     [StaticAddress("48 89 47 18 48 8B 1D ?? ?? ?? ??", 7, isPointer: true)]
     public static partial Player* Instance();
